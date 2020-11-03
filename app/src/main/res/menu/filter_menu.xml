@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menu_filter1"
+        android:title="@string/filtrer_par_salle"
+        android:icon="@drawable/white_filter_list_24"
+        app:showAsAction="always"/>
+</menu>

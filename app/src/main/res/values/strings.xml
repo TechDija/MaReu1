@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">MaReu1</string>
+    <string name="reinitialiser_label">réinitialiser</string>
+    <string name="annuler_label">Annuler</string>
+    <string name="filtrer_par_salle">Filtrer par salle :</string>
+    <string name="Mario">Mario</string>
+    <string name="Peach">Peach</string>
+    <string name="Luigi">Luigi</string>
+    <string name="Daisy">Daisy</string>
+    <string name="Toad">Toad</string>
+    <string name="DK">Donkey-Kong</string>
+    <string name="koopa">Koopa</string>
+    <string name="bowser">Bowser</string>
+    <string name="wario">Wario</string>
+    <string name="yoshi">Yoshi</string>
+    <string-array name="rooms">
+        <item>Mario</item>
+        <item>Luigi</item>
+        <item>Bowser</item>
+        <item>Peach</item>
+        <item>Daisy</item>
+        <item>Koopa</item>
+        <item>Donkey-Kong</item>
+        <item>Wario</item>
+        <item>Toad</item>
+        <item>Yoshi</item>
+    </string-array>
+</resources>

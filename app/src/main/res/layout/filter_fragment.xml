@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/filter_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filtrer_par_salle"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup_rooms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:singleSelection="false"
+        app:layout_constraintTop_toBottomOf="@id/filter_textview"
+        app:layout_constraintStart_toStartOf="parent">
+        
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Mario_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Mario"
+            android:textColor="@color/purple_500"
+            android:layout_margin="16dp"
+            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Peach_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Peach"
+            android:textColor="@color/purple_500"
+            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Luigi_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Luigi"
+            android:textColor="@color/purple_500"
+            android:layout_margin="16dp"
+            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Daisy_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Daisy"
+            android:textColor="@color/purple_500"
+            android:layout_margin="16dp"
+            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Toad_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Toad"
+            android:textColor="@color/purple_500"
+            android:layout_margin="16dp"
+            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Koopa_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/koopa"
+            android:textColor="@color/purple_500"
+            android:layout_margin="16dp"
+            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Bowser_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bowser"
+            android:textColor="@color/purple_500"
+            android:layout_margin="16dp"
+            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Wario_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wario"
+            android:textColor="@color/purple_500"
+            android:layout_margin="16dp"
+            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Yoshi_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/yoshi"
+            android:textColor="@color/purple_500"
+            android:layout_margin="16dp"
+            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/DK_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/DK"
+            android:textColor="@color/purple_500"
+            android:layout_margin="16dp"
+            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+        
+    </com.google.android.material.chip.ChipGroup>
+
+    <TextView
+        android:id="@+id/negative_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ANNULER"
+        android:textColor="@color/purple_500"
+        android:layout_margin="16dp"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/chipGroup_rooms"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/positive_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="APPLIQUER"
+        android:textColor="@color/purple_500"
+        android:layout_margin="16dp"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/chipGroup_rooms"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/neutral_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TOUT DECOCHER"
+        android:textColor="@color/purple_500"
+        android:layout_margin="16dp"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/chipGroup_rooms"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
