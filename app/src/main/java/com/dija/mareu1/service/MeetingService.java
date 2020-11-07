@@ -1,12 +1,15 @@
-package com.dija.mareu1.Service;
+package com.dija.mareu1.service;
 
-import com.dija.mareu1.Model.Meeting;
+import com.dija.mareu1.model.Meeting;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingService implements MeetingApiService {
     private List<Meeting> meetings = MeetingsGenerator.generateMeetings();
+    private List<Meeting> mfilteredMeetings = new ArrayList<>();
     private List<String> rooms = MeetingsGenerator.generateRooms();
+
 
     @Override
     public void addMeeting(Meeting meeting) {
@@ -25,6 +28,10 @@ public class MeetingService implements MeetingApiService {
 
     @Override
     public List<String> getAllRooms() {
-        return rooms ;
+        return rooms;
+    }
+
+    public void reloadMeetings() {
+        meetings = new ArrayList<>();
     }
 }

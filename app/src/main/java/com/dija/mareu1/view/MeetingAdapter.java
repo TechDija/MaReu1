@@ -1,7 +1,8 @@
-package com.dija.mareu1.View;
+package com.dija.mareu1.view;
 
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import android.widget.Filterable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dija.mareu1.Model.Meeting;
+import com.dija.mareu1.model.Meeting;
 import com.dija.mareu1.R;
 import com.dija.mareu1.databinding.ItemMeetingBinding;
 import com.dija.mareu1.events.DeleteMeetingEvent;
@@ -19,12 +20,15 @@ import com.dija.mareu1.events.DeleteMeetingEvent;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingViewHolder> implements Filterable {
     private List<Meeting> mfilteredMeetings;
     private List<Meeting> mMeetings;
     private Context context;
+    long input1;
+    long input2;
 
     public MeetingAdapter(List<Meeting> meetings) {
         this.mfilteredMeetings = meetings;
@@ -59,19 +63,20 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingViewHolder> impl
 
     @Override
     public Filter getFilter() {
-        return roomFilter;
+        return Filter;
     }
 
-    private Filter roomFilter = new Filter() {
+    private Filter Filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Meeting> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(mMeetings);
-            }   else {
-                String filterPattern = constraint.toString();
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Meeting meeting : mMeetings) {
-                    if (filterPattern.contains(meeting.getRoom())) {
+                    CharSequence strDate = DateFormat.format("kk:mm", Long.parseLong(meeting.getBeginningDateTime().toString()));
+                    if (strDate.toString().toLowerCase().contains(filterPattern) || meeting.getRoom().toLowerCase().contains(filterPattern)) {
                         filteredList.add(meeting);
                     }
                 }
@@ -84,11 +89,12 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingViewHolder> impl
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             mfilteredMeetings.clear();
-            mfilteredMeetings.addAll((List)results.values);
+            mfilteredMeetings.addAll((List) results.values);
             notifyDataSetChanged();
         }
     };
 }
+
 
 
 

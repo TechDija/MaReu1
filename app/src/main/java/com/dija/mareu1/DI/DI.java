@@ -1,7 +1,7 @@
 package com.dija.mareu1.DI;
 
-import com.dija.mareu1.Service.MeetingApiService;
-import com.dija.mareu1.Service.MeetingService;
+import com.dija.mareu1.service.MeetingApiService;
+import com.dija.mareu1.service.MeetingService;
 
 public class DI {
 

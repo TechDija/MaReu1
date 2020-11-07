@@ -2,7 +2,7 @@
     <string name="app_name">MaReu1</string>
     <string name="reinitialiser_label">réinitialiser</string>
     <string name="annuler_label">Annuler</string>
-    <string name="filtrer_par_salle">Filtrer par salle :</string>
+    <string name="filtrer_par_salle">Filtrer par salle</string>
     <string name="Mario">Mario</string>
     <string name="Peach">Peach</string>
     <string name="Luigi">Luigi</string>
@@ -13,6 +13,12 @@
     <string name="bowser">Bowser</string>
     <string name="wario">Wario</string>
     <string name="yoshi">Yoshi</string>
+    <string name="filtrer">filtrer</string>
+    <string name="filtrer_par_horaire">Filtrer par horaire</string>
+    <string name="objet_de_la_r_union">objet de la réunion</string>
+    <string name="choisir_la_date_et_l_heure">choisir la date et l\'horaire</string>
+    <string name="participants_de_la_r_union">participants de la réunion</string>
+    <string name="enregistrer">Créer une nouvelle réunion</string>
     <string-array name="rooms">
         <item>Mario</item>
         <item>Luigi</item>

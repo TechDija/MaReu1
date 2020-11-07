@@ -2,7 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/menu_filter1"
-        android:title="@string/filtrer_par_salle"
+        android:title="@string/filtrer"
         android:icon="@drawable/white_filter_list_24"
-        app:showAsAction="always"/>
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="android.widget.SearchView">
+
+    </item>
 </menu>

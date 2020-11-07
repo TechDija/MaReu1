@@ -1,4 +1,4 @@
-package com.dija.mareu1.View;
+package com.dija.mareu1.utils;
 
 import com.dija.mareu1.R;
 

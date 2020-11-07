@@ -1,4 +1,4 @@
-package com.dija.mareu1.View;
+package com.dija.mareu1.view;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
