@@ -8,7 +8,7 @@
     <dimen name="activity_add_lamzone_image">100dp</dimen>
 
     // main-activity //
-    <dimen name="activity_main_60dp_margin">100dp</dimen>
+    <dimen name="activity_main_60dp_margin">60dp</dimen>
     <dimen name="activity_main_FAB_margin">30dp</dimen>
 
     // item //

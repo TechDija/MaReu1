@@ -11,7 +11,7 @@
         android:background="@color/bleu_royal"
         android:theme="@style/AppToolbar"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Nouvelle Réunion"
+        app:title="Modifier la Réunion"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
         app:titleMarginStart="@dimen/activity_add_title_margin" />
 
@@ -54,6 +54,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/subjectLyt" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/display_current_room"
+        app:layout_constraintTop_toBottomOf="@id/beginningTimeBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
 
     <Spinner
         android:id="@+id/rooms"
@@ -63,7 +71,7 @@
         android:scrollbarSize="@dimen/activity_add_lamzone_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/beginningTimeBtn" />
+        app:layout_constraintTop_toBottomOf="@id/display_current_room" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/participantLyt"
@@ -80,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/participants_de_la_r_union"
-            android:inputType="textEmailAddress"/>
+            android:lines="3" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,9 +97,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_add_30_margin"
-        android:enabled="false"
+        android:enabled="true"
         android:gravity="center_horizontal"
-        android:text="@string/enregistrer"
+        android:text="modifier la réunion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/participantLyt" />

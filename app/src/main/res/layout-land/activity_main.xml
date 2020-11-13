@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.MainActivity">
+    tools:context=".controllers.activities.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
         android:background="@color/bleu_royal"
         android:theme="@style/AppToolbar"
         app:title="Ma Réu"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintTop_toTopOf="parent">
 
 </androidx.appcompat.widget.Toolbar>
@@ -22,6 +23,18 @@
         android:layout_height="match_parent"
         android:id="@+id/recycler_view"
         android:layout_marginTop="@dimen/activity_main_60dp_margin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/empty_textview"
+        android:text="Pas de réunion programmée l"
+        android:textColor="@color/black"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

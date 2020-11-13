@@ -4,8 +4,17 @@
     <item android:id="@+id/menu_filter1"
         android:title="@string/filtrer"
         android:icon="@drawable/white_filter_list_24"
-        app:showAsAction="always|collapseActionView"
-        app:actionViewClass="android.widget.SearchView">
+        app:showAsAction="always" >
 
+    <menu>
+
+    <item android:id="@+id/menu_filter2"
+       android:title="@string/filtrer_par_salle"/>
+
+    <item android:id="@+id/menu_filter3"
+        android:title="@string/filtrer_par_horaire"/>
+
+    </menu>
     </item>
+
 </menu>

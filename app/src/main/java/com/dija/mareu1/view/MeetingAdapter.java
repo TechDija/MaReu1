@@ -1,6 +1,7 @@
 package com.dija.mareu1.view;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -12,27 +13,38 @@ import android.widget.Filterable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dija.mareu1.DI.DI;
+import com.dija.mareu1.controllers.fragments.FragmentAddRoom;
 import com.dija.mareu1.model.Meeting;
 import com.dija.mareu1.R;
 import com.dija.mareu1.databinding.ItemMeetingBinding;
 import com.dija.mareu1.events.DeleteMeetingEvent;
+import com.dija.mareu1.model.Room;
+import com.dija.mareu1.service.MeetingApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class MeetingAdapter extends RecyclerView.Adapter<MeetingViewHolder> implements Filterable {
+public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> implements Filterable {
     private List<Meeting> mfilteredMeetings;
+    private MeetingApiService service;
     private List<Meeting> mMeetings;
-    private Context context;
-    long input1;
-    long input2;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener (OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public MeetingAdapter(List<Meeting> meetings) {
         this.mfilteredMeetings = meetings;
         mMeetings = new ArrayList<>(mfilteredMeetings);
+        service = DI.getMeetingApiService();
     }
 
     @NonNull
@@ -69,20 +81,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingViewHolder> impl
     private Filter Filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Meeting> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(mMeetings);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Meeting meeting : mMeetings) {
-                    CharSequence strDate = DateFormat.format("kk:mm", Long.parseLong(meeting.getBeginningDateTime().toString()));
-                    if (strDate.toString().toLowerCase().contains(filterPattern) || meeting.getRoom().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(meeting);
-                    }
-                }
-            }
             FilterResults results = new FilterResults();
-            results.values = filteredList;
+            results.values = service.roomFilter(constraint);
             return results;
         }
 
@@ -93,6 +93,51 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingViewHolder> impl
             notifyDataSetChanged();
         }
     };
+
+     public void timeFilter(long tag, long tag1) {
+        mfilteredMeetings.clear();
+        mfilteredMeetings.addAll(service.timeFilterService(tag, tag1));
+        notifyDataSetChanged();
+    }
+
+    public class MeetingViewHolder extends RecyclerView.ViewHolder {
+        ItemMeetingBinding binding;
+        MeetingApiService service;
+
+        public MeetingViewHolder(ItemMeetingBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            service = DI.getMeetingApiService();
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+        }
+        @SuppressLint("SetTextI18n")
+        public void updateWithMeeting(Meeting meeting){
+            Context c = binding.firstLineItem.getContext();
+            String date = convertDate(meeting.getBeginningDateTime().toString(), "kk:mm");
+            for (Room room : service.getAllRooms()) {
+                if (meeting.getRoom() == room.getRoomName()) {
+                    binding.imageColorItem.setImageResource(FragmentAddRoom.getImageId(c, room.getRoomImage()));
+                }
+            }
+            binding.firstLineItem.setText(meeting.getSubject()+" - "+ date +" - "+meeting.getRoom());
+            binding.secondLineItem.setText(meeting.getPeople());
+        }
+        private String convertDate(String dateInMilliseconds,String dateFormat) {
+            return DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
+        }
+    }
 }
 
 

@@ -17,8 +17,10 @@
     <string name="filtrer_par_horaire">Filtrer par horaire</string>
     <string name="objet_de_la_r_union">objet de la réunion</string>
     <string name="choisir_la_date_et_l_heure">choisir la date et l\'horaire</string>
-    <string name="participants_de_la_r_union">participants de la réunion</string>
+    <string name="participants_de_la_r_union">Participants de la réunion</string>
     <string name="enregistrer">Créer une nouvelle réunion</string>
+    <string name="choisir_la_date">choisir la date</string>
+    <string name="choisir_l_horaire">choisir l\'horaire</string>
     <string-array name="rooms">
         <item>Mario</item>
         <item>Luigi</item>

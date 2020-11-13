@@ -18,14 +18,9 @@ public abstract class MeetingsGenerator {
             new Meeting(parser("31/10/2020 16:00"), parser("31/10/2020 16:45"), "Luigi", "Réunion C", "amandine@lamzone.com, luc@lamzone.com") );
 
 
-    static List<String> ROOMS = Arrays.asList(
-            "Choix de la salle", "Mario", "Luigi", "Bowser", "Peach", "Daisy", "Koopa", "Donkey-Kong", "Wario", "Toad", "Yoshi");
-
-
     static List<Meeting> generateMeetings(){
         return new ArrayList<>(MEETINGS);
     }
-    static List<String> generateRooms() {return new ArrayList<>(ROOMS); }
 
     static long parser(String string) {
         long milliseconds = 0;
