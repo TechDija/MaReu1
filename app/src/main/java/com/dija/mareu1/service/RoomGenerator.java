@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RoomGenerator {
 
-    static List<Room> ROOMS = Arrays.asList(
+    public final static List<Room> ROOMS = Arrays.asList(
             new Room("Salle de réunion", "lamzone"),
             new Room("Mario", "pastille_rouge"),
             new Room("Luigi", "pastille_vert"),

@@ -60,21 +60,23 @@
         app:layout_constraintStart_toStartOf="parent"
         >
 
-    <Button
+    <TextView
         android:id="@+id/time_filter_neutral_button"
         android:layout_width="wrap_content"
         android:layout_margin="16dp"
-        android:text="Annuler le filtre"
+        android:text="ANNULER LE FILTRE"
+        android:textColor="@color/purple_500"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/time_filter_second_button"
         app:layout_constraintEnd_toStartOf="@id/time_filter_apply_button"
         app:layout_constraintHorizontal_weight="1"/>
 
-    <Button
+    <TextView
         android:id="@+id/time_filter_apply_button"
         android:layout_width="wrap_content"
         android:layout_margin="16dp"
-        android:text="Appliquer"
+        android:text="APPLIQUER"
+        android:textColor="@color/purple_500"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/time_filter_second_button"
         app:layout_constraintStart_toEndOf="@id/time_filter_neutral_button"

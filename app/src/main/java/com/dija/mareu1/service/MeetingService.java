@@ -57,7 +57,7 @@ public class MeetingService implements MeetingApiService {
             filteredList.addAll(meetings);
         } else {
             for (Meeting meeting : meetings) {
-                if (tag < meeting.getBeginningDateTime() && meeting.getBeginningDateTime() < tag1 && tag < meeting.getEndDateTime() && meeting.getEndDateTime() < tag1) {
+                if ((tag < meeting.getBeginningDateTime() && meeting.getBeginningDateTime() < tag1) || (tag < meeting.getEndDateTime() && meeting.getEndDateTime() < tag1)) {
                     filteredList.add(meeting);
                 }
             }

@@ -2,27 +2,28 @@
 <resources>
     // add-activity //
     <dimen name="activity_add_title_margin">60dp</dimen>
-    <dimen name="activity_add_30_margin">30dp</dimen>
+    <dimen name="activity_add_30_margin">60dp</dimen>
     <dimen name="activity_add_subject_margin">30dp</dimen>
     <dimen name="add_activity_sideMargin">16dp</dimen>
-    <dimen name="activity_add_lamzone_image">100dp</dimen>
+    <dimen name="activity_add_lamzone_image">300dp</dimen>
 
     // main-activity //
     <dimen name="activity_main_60dp_margin">60dp</dimen>
-    <dimen name="activity_main_FAB_margin">30dp</dimen>
+    <dimen name="activity_main_FAB_margin">60dp</dimen>
 
     // item //
     <dimen name="item_circle_size">100dp</dimen>
     <dimen name="item_image_margin">20dp</dimen>
-    <dimen name="item_firstLine_text_size">16sp</dimen>
-    <dimen name="item_secondLine_text_size">12sp</dimen>
-    <dimen name="item_firstLine_marginTop">25dp</dimen>
+    <dimen name="item_firstLine_text_size">25sp</dimen>
+    <dimen name="item_secondLine_text_size">20sp</dimen>
+    <dimen name="item_firstLine_marginTop">35dp</dimen>
     <dimen name="item_line_marginStart">10dp</dimen>
-    <dimen name="item_firstLine_width">300dp</dimen>
-    <dimen name="item_secondLine_width">300dp</dimen>
+    <dimen name="item_firstLine_width">600dp</dimen>
+    <dimen name="item_secondLine_width">600dp</dimen>
     <dimen name="item_secondLine_marginTop">5dp</dimen>
-    <dimen name="item_bin_width">35dp</dimen>
-    <dimen name="item_bin_height">45dp</dimen>
+    <dimen name="item_bin_width">45dp</dimen>
+    <dimen name="item_bin_height">55dp</dimen>
+
 
 
 </resources>

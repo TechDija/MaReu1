@@ -110,13 +110,9 @@ public class FragmentAddTextAndButton extends Fragment {
             @Override
             public void onClick(View v) {
                 addParticipantFabActions();
-
-
             }
         });
-
         activateCreateMeetingButton();
-
     }
 
 
@@ -211,7 +207,7 @@ public class FragmentAddTextAndButton extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 15 ) {
+                if (s.length() > 30 ) {
                     allIsFilled = true;
 
                     // SENDING DATA TO ACTIVITY

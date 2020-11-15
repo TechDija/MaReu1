@@ -42,7 +42,7 @@ public class AddMeetingActivity extends AppCompatActivity implements FragmentAdd
         this.subjectInput = subjectInput;
         this.longBeginningDateTime = longBeginningDateTime;
         this.calculatedLongEndDateTime = calculatedLongEndDateTime;
-        this.participantInput = participantInput;
+        this.participantInput = participantInput.substring(0, participantInput.length() - 2);
         this.allIsFilled = allIsFilled;
     }
 
@@ -64,7 +64,7 @@ public class AddMeetingActivity extends AppCompatActivity implements FragmentAdd
         binding.createMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (allIsFilled && occupiedRoomName != "Salle de réunion") {
+                if (allIsFilled && occupiedRoomName != "Salle de réunion" && longBeginningDateTime!=0 && subjectInput != "") {
                     createMeetingOnclick();
                 } else {
                     Toast.makeText(getApplication(), "Veuillez remplir tous les champs", Toast.LENGTH_LONG).show();
@@ -84,11 +84,11 @@ public class AddMeetingActivity extends AppCompatActivity implements FragmentAdd
     private void createMeetingOnclick() {
         MeetingApiService service = DI.getMeetingApiService();
         Meeting meeting = new Meeting(
-                longBeginningDateTime,
-                calculatedLongEndDateTime,
-                occupiedRoomName,
-                subjectInput,
-                participantInput);
+                this.longBeginningDateTime,
+                this.calculatedLongEndDateTime,
+                this.occupiedRoomName,
+                this.subjectInput,
+                this.participantInput);
         service.addMeeting(meeting);
         navigateToParentActivity();
     }

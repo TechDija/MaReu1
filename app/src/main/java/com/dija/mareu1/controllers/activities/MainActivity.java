@@ -133,9 +133,11 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
         if (mMeetings.isEmpty()) {
             binding.recyclerView.setVisibility(View.GONE);
             binding.emptyTextview.setVisibility(View.VISIBLE);
+            binding.emptyImageview.setVisibility(View.VISIBLE);
         } else {
             binding.recyclerView.setVisibility(View.VISIBLE);
             binding.emptyTextview.setVisibility(View.GONE);
+            binding.emptyImageview.setVisibility(View.GONE);
         }
     }
 

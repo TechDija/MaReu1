@@ -140,7 +140,7 @@
         android:id="@+id/neutral_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TOUT DECOCHER"
+        android:text="ANNULER LE FILTRE"
         android:textColor="@color/purple_500"
         android:layout_margin="16dp"
         android:padding="10dp"

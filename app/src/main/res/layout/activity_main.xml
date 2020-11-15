@@ -29,12 +29,23 @@
         android:layout_height="wrap_content"
         android:id="@+id/empty_textview"
         android:text="Pas de réunion programmée l"
-        android:textColor="@color/black"
+        android:textColor="#061924"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/empty_imageview"
+        android:background="@drawable/empty_dataset"
+        android:layout_marginBottom="@dimen/activity_add_30_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/empty_textview"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

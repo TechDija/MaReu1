@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,79 +14,34 @@
         android:layout_height="wrap_content"
         android:background="@color/bleu_royal"
         android:theme="@style/AppToolbar"
-        app:layout_constraintTop_toTopOf="parent"
         app:title="Nouvelle Réunion"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
-        app:titleMarginStart="@dimen/activity_add_title_margin" />
+        app:titleMarginStart="@dimen/activity_add_title_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/lamzone"
-        android:layout_width="@dimen/activity_add_lamzone_image"
-        android:layout_height="@dimen/activity_add_lamzone_image"
-        android:layout_marginTop="@dimen/activity_add_30_margin"
-        android:background="@drawable/lamzone"
-        android:gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_add_activity"  />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/subjectLyt"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_add_30_margin"
-        android:layout_marginStart="@dimen/add_activity_sideMargin"
-        android:layout_marginEnd="@dimen/add_activity_sideMargin"
-        app:layout_constraintTop_toBottomOf="@id/lamzone">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/subject"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/objet_de_la_r_union" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/beginningTimeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_add_30_margin"
-        android:text="@string/choisir_la_date_et_l_heure"
-        android:textSize="@dimen/item_firstLine_text_size"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
+        android:id="@+id/fragment_container"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_add_activity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subjectLyt" />
+        app:layout_constraintStart_toStartOf="parent">
 
-
-    <Spinner
-        android:id="@+id/rooms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_add_30_margin"
-        android:scrollbarSize="@dimen/activity_add_lamzone_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/beginningTimeBtn" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/participantLyt"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_add_30_margin"
-        android:layout_marginStart="@dimen/add_activity_sideMargin"
-        android:layout_marginEnd="@dimen/add_activity_sideMargin"
-        app:layout_constraintTop_toBottomOf="@id/rooms">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/participant"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/first_add_fragment_container"
+            android:orientation="vertical"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/participants_de_la_r_union"
-            android:inputType="textEmailAddress"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:id="@+id/second_add_fragment_container"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/create_meeting"
@@ -90,10 +49,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_add_30_margin"
         android:enabled="false"
-        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
         android:text="@string/enregistrer"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/participantLyt" />
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

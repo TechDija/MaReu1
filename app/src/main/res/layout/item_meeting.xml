@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:layout_width="@dimen/item_firstLine_width"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/firstLine_item"
         android:text="Réunion A - 16h00 - Wario"
@@ -26,10 +26,11 @@
         android:ellipsize="end"
         android:singleLine="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/image_color_item"/>
+        app:layout_constraintStart_toEndOf="@id/image_color_item"
+        app:layout_constraintEnd_toStartOf="@id/image_bin_item"/>
 
     <TextView
-        android:layout_width="@dimen/item_secondLine_width"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/secondLine_item"
         android:text="dija@lamzone.com, maddy@lamzone.com"
@@ -40,7 +41,8 @@
         android:ellipsize="end"
         android:singleLine="true"
         app:layout_constraintTop_toBottomOf="@id/firstLine_item"
-        app:layout_constraintStart_toEndOf="@id/image_color_item"/>
+        app:layout_constraintStart_toEndOf="@id/image_color_item"
+        app:layout_constraintEnd_toStartOf="@id/image_bin_item"/>
 
 
     <ImageView
