@@ -27,13 +27,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements FragmentRoomFilter.OnInputSelected, FragmentTimeFilter.OnInputSelected, MeetingAdapter.OnItemClickListener {
-    public static final String SUBJECT = "réunion X";
-    public static final long TIME = 0;
-    public static final String ROOM = "roomName";
-    public static final String PARTICIPANT = "@lamzone.com";
-    long tag;
-    long tag1;
+public class MainActivity extends AppCompatActivity implements FragmentRoomFilter.OnInputSelected, FragmentTimeFilter.OnInputSelected {
 
     ActivityMainBinding binding;
     private MeetingAdapter mAdapter;
@@ -41,17 +35,33 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
     private List<Meeting> mMeetings;
     private List<Meeting> mfilteredMeetings;
 
+    //----------------------------
+    //RECEIVING DATA FROM INTERFACES
+    //-----------------------------
+    @Override
+    public void sendInput(String filteredData) {
+        mAdapter.getFilter().filter(filteredData);
+    }
+
+    @Override
+    public void sendInput(long tag, long tag1) {
+        mAdapter.timeFilter(tag, tag1);
+    }
+
+    //---------------------------
+    //ON CREATE
+    //---------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
         setSupportActionBar(binding.toolbarMainActivity);
         binding.toolbarMainActivity.setTitleTextColor(getResources().getColor(R.color.white));
-        service = DI.getMeetingApiService(); // <= changing for POC mode
+        service = DI.getNewInstanceMeetingApiService(); // <= changing for POC mode
         initList();
-
 
         binding.addFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +70,10 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
             }
         });
     }
+
+    //---------------------------
+    //MENU CONFIGURATION
+    //---------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -85,6 +99,9 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
         }
     }
 
+    //---------------------------
+    //LIFECYCLE
+    //---------------------------
     @Override
     public void onResume() {
         super.onResume();
@@ -104,6 +121,9 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
         EventBus.getDefault().unregister(this);
     }
 
+    //---------------------------
+    //EVENT BUS SUBSCRIPTION
+    //---------------------------
     @Subscribe
     public void onDeleteMeeting(DeleteMeetingEvent event) {
         service.deleteMeeting(event.meeting);
@@ -121,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
         this.binding.recyclerView.setAdapter(this.mAdapter);
         this.binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ifDataSetIsEmpty();
-        mAdapter.setOnItemClickListener(MainActivity.this);
     }
 
     private void navigateToAddActivity() {
@@ -141,28 +160,4 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
         }
     }
 
-    @Override
-    public void onItemClick(int position) {
-        Intent detailIntent = new Intent(this, EditActivity.class);
-        Meeting clickedMeeting = mfilteredMeetings.get(position);
-
-        detailIntent.putExtra(SUBJECT, clickedMeeting.getSubject());
-        detailIntent.putExtra(String.valueOf(TIME), clickedMeeting.getBeginningDateTime());
-        detailIntent.putExtra(ROOM, clickedMeeting.getRoom());
-        detailIntent.putExtra(PARTICIPANT, clickedMeeting.getPeople());
-
-        startActivity(detailIntent);
-    }
-
-    @Override
-    public void sendInput(String filteredData) {
-        mAdapter.getFilter().filter(filteredData);
-    }
-
-    @Override
-    public void sendInput(long tag, long tag1) {
-        this.tag = tag;
-        this.tag1 = tag1;
-        mAdapter.timeFilter(tag, tag1);
-    }
 }

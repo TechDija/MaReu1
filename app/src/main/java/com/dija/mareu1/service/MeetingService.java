@@ -1,7 +1,5 @@
 package com.dija.mareu1.service;
 
-import android.widget.Filter;
-
 import com.dija.mareu1.model.Meeting;
 import com.dija.mareu1.model.Room;
 
@@ -10,10 +8,7 @@ import java.util.List;
 
 public class MeetingService implements MeetingApiService {
     private List<Meeting> meetings = MeetingsGenerator.generateMeetings();
-    private List<Meeting> mfilteredMeetings = new ArrayList<>();
     private List<Room> rooms = RoomGenerator.generateRooms();
-
-
 
     @Override
     public void addMeeting(Meeting meeting) {
@@ -57,15 +52,12 @@ public class MeetingService implements MeetingApiService {
             filteredList.addAll(meetings);
         } else {
             for (Meeting meeting : meetings) {
-                if ((tag < meeting.getBeginningDateTime() && meeting.getBeginningDateTime() < tag1) || (tag < meeting.getEndDateTime() && meeting.getEndDateTime() < tag1)) {
+                if ((tag < meeting.getBeginningDateTime() && meeting.getBeginningDateTime() < tag1)
+                        || (tag < meeting.getEndDateTime() && meeting.getEndDateTime() < tag1)) {
                     filteredList.add(meeting);
                 }
             }
         }
-        mfilteredMeetings.clear();
-        mfilteredMeetings.addAll(filteredList);
         return filteredList;
     }
-
-
 }

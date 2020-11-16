@@ -15,9 +15,13 @@ public class Meeting {
         this.beginningDateTime = beginningTime;
     }
 
-    public Long getEndDateTime(){ return endDateTime; }
+    public Long getEndDateTime() {
+        return endDateTime;
+    }
 
-    public void setEndDateTime(Long endTime) {this.endDateTime = endTime; }
+    public void setEndDateTime(Long endTime) {
+        this.endDateTime = endTime;
+    }
 
     public String getRoom() {
         return room;

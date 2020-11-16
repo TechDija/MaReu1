@@ -14,11 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dija.mareu1.DI.DI;
-import com.dija.mareu1.controllers.fragments.FragmentAddRoom;
-import com.dija.mareu1.model.Meeting;
 import com.dija.mareu1.R;
+import com.dija.mareu1.controllers.fragments.FragmentAddRoom;
 import com.dija.mareu1.databinding.ItemMeetingBinding;
 import com.dija.mareu1.events.DeleteMeetingEvent;
+import com.dija.mareu1.model.Meeting;
 import com.dija.mareu1.model.Room;
 import com.dija.mareu1.service.MeetingApiService;
 
@@ -31,15 +31,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     private List<Meeting> mfilteredMeetings;
     private MeetingApiService service;
     private List<Meeting> mMeetings;
-    private OnItemClickListener mListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener (OnItemClickListener listener) {
-        mListener = listener;
-    }
+    //-------------------------
+    //CONSTRUCTOR
+    //-------------------------
 
     public MeetingAdapter(List<Meeting> meetings) {
         this.mfilteredMeetings = meetings;
@@ -47,6 +42,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         service = DI.getMeetingApiService();
     }
 
+    //-------------------------
+    //ON CREATE
+    //-------------------------
     @NonNull
     @Override
     public MeetingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,6 +53,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         View view = inflater.inflate(R.layout.item_meeting, parent, false);
         return new MeetingViewHolder(ItemMeetingBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
+
+    //-------------------------
+    //ON BIND
+    //-------------------------
 
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
@@ -68,11 +70,17 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         });
     }
 
+    //-------------------------
+    //ITEM COUNT
+    //-------------------------
     @Override
     public int getItemCount() {
         return this.mfilteredMeetings.size();
     }
 
+    //-------------------------
+    //FILTERS
+    //-------------------------
     @Override
     public Filter getFilter() {
         return Filter;
@@ -94,12 +102,15 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         }
     };
 
-     public void timeFilter(long tag, long tag1) {
+    public void timeFilter(long tag, long tag1) {
         mfilteredMeetings.clear();
         mfilteredMeetings.addAll(service.timeFilterService(tag, tag1));
         notifyDataSetChanged();
     }
 
+    //-------------------------
+    //VIEWHOLDER
+    //-------------------------
     public class MeetingViewHolder extends RecyclerView.ViewHolder {
         ItemMeetingBinding binding;
         MeetingApiService service;
@@ -108,22 +119,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
             super(binding.getRoot());
             this.binding = binding;
             service = DI.getMeetingApiService();
-
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            mListener.onItemClick(position);
-                        }
-                    }
-                }
-            });
         }
+
         @SuppressLint("SetTextI18n")
-        public void updateWithMeeting(Meeting meeting){
+        public void updateWithMeeting(Meeting meeting) {
             Context c = binding.firstLineItem.getContext();
             String date = convertDate(meeting.getBeginningDateTime().toString(), "kk:mm");
             for (Room room : service.getAllRooms()) {
@@ -131,10 +130,11 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                     binding.imageColorItem.setImageResource(FragmentAddRoom.getImageId(c, room.getRoomImage()));
                 }
             }
-            binding.firstLineItem.setText(meeting.getSubject()+" - "+ date +" - "+meeting.getRoom());
+            binding.firstLineItem.setText(meeting.getSubject() + " - " + date + " - " + meeting.getRoom());
             binding.secondLineItem.setText(meeting.getPeople());
         }
-        private String convertDate(String dateInMilliseconds,String dateFormat) {
+
+        private String convertDate(String dateInMilliseconds, String dateFormat) {
             return DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
         }
     }

@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.dija.mareu1.DI.DI;
-import com.dija.mareu1.R;
 import com.dija.mareu1.databinding.AddRoomFragmentBinding;
 import com.dija.mareu1.model.Room;
 import com.dija.mareu1.service.MeetingApiService;
@@ -29,15 +28,22 @@ public class FragmentAddRoom extends Fragment implements AdapterView.OnItemSelec
     private List<Room> availableRooms;
     private String occupiedRoomName;
 
-    //INTERFACE
-    public interface FirstFragmentListener{
+    //--------------------------
+    // INTERFACE
+    //-------------------------
+    public interface FirstFragmentListener {
         void onFirstFragmentSent(String occupiedRoomName);
     }
 
-    // CONSTRUCTOR
-
+    //--------------------------
+    // EMPTY CONSTRUCTOR
+    //-------------------------
     public FragmentAddRoom() {
     }
+
+    //--------------------------
+    // ON CREATE VIEW
+    //-------------------------
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,15 +52,16 @@ public class FragmentAddRoom extends Fragment implements AdapterView.OnItemSelec
         return view;
     }
 
-    // RECOVERING DATA
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         service = DI.getMeetingApiService();
         availableRooms = service.getAllRooms();
+
+        //--------------------SETTING SPINNER-------------
         getAvailableRoomNames();
     }
-        // DISPLAYING DATA
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -62,21 +69,26 @@ public class FragmentAddRoom extends Fragment implements AdapterView.OnItemSelec
 
     }
 
-        @Override
-        public void onItemSelected (AdapterView < ? > parent, View view,int position, long id){
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         occupiedRoomName = parent.getItemAtPosition(position).toString();
+        //--------------------SENDING DATA TO ACTIVITY-------------
         mListener.onFirstFragmentSent(occupiedRoomName);
-
-            for (Room room : availableRooms) {
-                if (occupiedRoomName.contains(room.getRoomName())) {
-                    binding.roomImage.setImageResource(getImageId(getContext(), room.getRoomImage()));
-                }
+        //--------------------SETTING IMAGE ACCORDING TO ROOM----------------
+        for (Room room : availableRooms) {
+            if (occupiedRoomName.contains(room.getRoomName())) {
+                binding.roomImage.setImageResource(getImageId(getContext(), room.getRoomImage()));
             }
-    }
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
+        }
     }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    //------------------
+    // LIFECYCLE
+    //------------------
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);

@@ -36,28 +36,26 @@ public class FragmentAddTextAndButton extends Fragment {
     private long longBeginningDateTime;
     private long calculatedLongEndDateTime;
     private boolean allIsFilled;
-    private int year;
-    private int month;
-    private int day;
-    private int hour;
-    private int minute;
+    private int year, month, day, hour, minute;
 
-    private int yearInput;
-    private int monthInput;
-    private int dayInput;
-    private int hourInput;
-    private int minuteInput;
+    private int yearInput, monthInput, dayInput, hourInput, minuteInput;
 
-    //INTERFACE
+    //--------------------------
+    // INTERFACE
+    //-------------------------
     public interface SecondFragmentListener {
         void onSecondFragmentSent(String subjectInput, long longBeginningDateTime, long calculatedLongEndDateTime, String participantInput, boolean allIsFilled);
     }
 
-
-    // CONSTRUCTOR
+    //--------------------------
+    // EMPTY CONSTRUCTOR
+    //-------------------------
     public FragmentAddTextAndButton() {
     }
 
+    //--------------------------
+    // ON CREATE VIEW
+    //-------------------------
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,7 +73,7 @@ public class FragmentAddTextAndButton extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // DISPLAYING DATA
+        //-------------SETTING DATE TIME PICKER BUTTON--------------
 
         binding.dateTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +101,7 @@ public class FragmentAddTextAndButton extends Fragment {
                 getEndDateTimeLong();
             }
         };
-
+        //-------------SETTING PARTICIPANT ADDING--------------
         binding.participant.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
         binding.addAddFab.setOnClickListener(new View.OnClickListener() {
@@ -112,9 +110,13 @@ public class FragmentAddTextAndButton extends Fragment {
                 addParticipantFabActions();
             }
         });
+        //------------AUTHORIZING MEETING CREATION--------------
         activateCreateMeetingButton();
     }
 
+    //--------------------------
+    // LIFECYCLE
+    //-------------------------
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -196,21 +198,31 @@ public class FragmentAddTextAndButton extends Fragment {
         }
     }
 
+
+    public final static boolean isValidEmail(CharSequence target) {
+        if (TextUtils.isEmpty(target)) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
+
+
     private void activateCreateMeetingButton() {
         binding.participantTextview.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 30 ) {
+                if (s.length() > 30) {
                     allIsFilled = true;
-
-                    // SENDING DATA TO ACTIVITY
+                    //---------SENDING DATA TO ACTIVITY-----------
                     mListener.onSecondFragmentSent(
                             binding.subject.getText().toString(),
                             longBeginningDateTime,
@@ -222,14 +234,5 @@ public class FragmentAddTextAndButton extends Fragment {
 
         });
     }
-
-    public final static boolean isValidEmail(CharSequence target) {
-        if (TextUtils.isEmpty(target)) {
-            return false;
-        } else {
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
-        }
-    }
-
 
 }

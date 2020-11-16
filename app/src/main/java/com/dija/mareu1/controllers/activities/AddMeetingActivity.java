@@ -46,6 +46,9 @@ public class AddMeetingActivity extends AppCompatActivity implements FragmentAdd
         this.allIsFilled = allIsFilled;
     }
 
+    //--------------------------------
+    //ON CREATE
+    //--------------------------------
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,33 +67,35 @@ public class AddMeetingActivity extends AppCompatActivity implements FragmentAdd
         binding.createMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (allIsFilled && occupiedRoomName != "Salle de réunion" && longBeginningDateTime!=0 && subjectInput != "") {
-                    createMeetingOnclick();
-                } else {
-                    Toast.makeText(getApplication(), "Veuillez remplir tous les champs", Toast.LENGTH_LONG).show();
-                }
+                createMeetingOnclick();
             }
         });
     }
+
 
     //------------------
     // ACTIONS
     //------------------
 
     private void initializeButton() {
-                binding.createMeeting.setEnabled(true);
+        binding.createMeeting.setEnabled(true);
     }
 
     private void createMeetingOnclick() {
-        MeetingApiService service = DI.getMeetingApiService();
-        Meeting meeting = new Meeting(
-                this.longBeginningDateTime,
-                this.calculatedLongEndDateTime,
-                this.occupiedRoomName,
-                this.subjectInput,
-                this.participantInput);
-        service.addMeeting(meeting);
-        navigateToParentActivity();
+        if (allIsFilled && occupiedRoomName != "Salle de réunion" && longBeginningDateTime != 0 && subjectInput != "") {
+            MeetingApiService service = DI.getMeetingApiService();
+            Meeting meeting = new Meeting(
+                    this.longBeginningDateTime,
+                    this.calculatedLongEndDateTime,
+                    this.occupiedRoomName,
+                    this.subjectInput,
+                    this.participantInput);
+            service.addMeeting(meeting);
+            navigateToParentActivity();
+        } else {
+            Toast.makeText(getApplication(), "Veuillez remplir tous les champs", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void navigateToParentActivity() {

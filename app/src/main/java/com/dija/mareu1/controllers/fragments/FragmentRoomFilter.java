@@ -18,18 +18,21 @@ import com.dija.mareu1.databinding.RoomFilterFragmentBinding;
 import java.util.ArrayList;
 
 public class FragmentRoomFilter extends DialogFragment {
-
     private RoomFilterFragmentBinding binding;
     public OnInputSelected mOnInputSelected;
 
     private ArrayList<String> selectedChipData;
 
+    //--------------------------
     // INTERFACE
-
-    public interface OnInputSelected{
+    //-------------------------
+    public interface OnInputSelected {
         void sendInput(String filteredData);
     }
 
+    //-------------------------------
+    //ON CREATE VIEW
+    //-------------------------------
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,22 +40,56 @@ public class FragmentRoomFilter extends DialogFragment {
         View view = binding.getRoot();
 
         selectedChipData = new ArrayList<>();
-
         chipsOnCheckedChangeListener();
 
+        //--------NEGATIVE BUTTON-----------------
         binding.negativeActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { getDialog().dismiss(); }});
+            public void onClick(View v) {
+                getDialog().dismiss();
+            }
+        });
 
+        //--------NEUTRAL BUTTON-----------------
         binding.neutralActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { neutralButtonActions(); }});
+            public void onClick(View v) {
+                neutralButtonActions();
+            }
+        });
 
+        //--------POSITIVE BUTTON-----------------
         binding.positiveActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { positiveButtonActions(); }});
+            public void onClick(View v) {
+                positiveButtonActions();
+            }
+        });
 
         return view;
+    }
+
+    //----------------------------
+    //LIFECYCLE
+    //----------------------------
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+        params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            mOnInputSelected = (OnInputSelected) getActivity();
+        } catch (ClassCastException e) {
+            Log.e("TAG", "onAttach ClassCastException: " + e.getMessage());
+        }
     }
 
     //----------------------------
@@ -69,7 +106,7 @@ public class FragmentRoomFilter extends DialogFragment {
                     selectedChipData.remove(buttonView.getText().toString());
                 }
             }
-        } ;
+        };
         binding.MarioChip.setOnCheckedChangeListener(checkedChangeListener);
         binding.LuigiChip.setOnCheckedChangeListener(checkedChangeListener);
         binding.BowserChip.setOnCheckedChangeListener(checkedChangeListener);
@@ -89,30 +126,10 @@ public class FragmentRoomFilter extends DialogFragment {
         getDialog().dismiss();
     }
 
-    private void positiveButtonActions(){
+    private void positiveButtonActions() {
         if (mOnInputSelected != null) {
             mOnInputSelected.sendInput(selectedChipData.toString());
         }
         getDialog().dismiss();
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
-        params.width = ConstraintLayout.LayoutParams.MATCH_PARENT;
-        params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            mOnInputSelected = (OnInputSelected) getActivity();
-        } catch (ClassCastException e){
-            Log.e("TAG", "onAttach ClassCastException: "+ e.getMessage());
-        }
     }
 }

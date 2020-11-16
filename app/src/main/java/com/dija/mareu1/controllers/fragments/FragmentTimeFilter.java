@@ -27,71 +27,59 @@ public class FragmentTimeFilter extends DialogFragment {
     private TimeFilterFragmentBinding binding;
     public FragmentTimeFilter.OnInputSelected mOnInputSelected;
 
-    private DatePickerDialog.OnDateSetListener mOnDateSetListener;
-    private TimePickerDialog.OnTimeSetListener mOnTimeSetListener;
-    private DatePickerDialog.OnDateSetListener mOnDateSetListener1;
-    private TimePickerDialog.OnTimeSetListener mOnTimeSetListener1;
+    private DatePickerDialog.OnDateSetListener mOnDateSetListener, mOnDateSetListener1;
+    private TimePickerDialog.OnTimeSetListener mOnTimeSetListener, mOnTimeSetListener1;
 
-    private int year;
-    private int month;
-    private int day;
-    private int hour;
-    private int minute;
+    private int year, month, day, hour, minute;
+    private int yearInput, monthInput, dayInput, hourInput, minuteInput;
+    private int yearInput1, monthInput1, dayInput1, hourInput1, minuteInput1;
+    long longFirstDateTime, longSecondDateTime;
 
-    private int yearInput;
-    private int monthInput;
-    private int dayInput;
-    private int hourInput;
-    private int minuteInput;
-
-    private int yearInput1;
-    private int monthInput1;
-    private int dayInput1;
-    private int hourInput1;
-    private int minuteInput1;
-
-    long longFirstDateTime;
-    long longSecondDateTime;
-
+    //-------------------------------
     //INTERFACE
-    public interface OnInputSelected{
+    //-------------------------------
+    public interface OnInputSelected {
         void sendInput(long tag, long tag1);
     }
 
+    //-------------------------------
+    //ON CREATE VIEW
+    //-------------------------------
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = TimeFilterFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        // FIRST BUTTON
+
+        //--------FIRST TAG BUTTON-----------------
         binding.timeFilterFirstButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pickDate(mOnDateSetListener);
             }
-            });
-                mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        yearInput = year;
-                        monthInput = month;
-                        dayInput = dayOfMonth;
-                        pickTime(mOnTimeSetListener);
-                    }
-                };
-                mOnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        hourInput = hourOfDay;
-                        minuteInput = minute;
+        });
+        mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                yearInput = year;
+                monthInput = month;
+                dayInput = dayOfMonth;
+                pickTime(mOnTimeSetListener);
+            }
+        };
+        mOnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                hourInput = hourOfDay;
+                minuteInput = minute;
 
-                        getFirstDateTimeLong();
-                        binding.timeFilterFirstButton.setText(getDateTimeString(longFirstDateTime));
-                    }
-                };
+                getFirstDateTimeLong();
+                binding.timeFilterFirstButton.setText(getDateTimeString(longFirstDateTime));
+            }
+        };
 
-        // SECOND BUTTON
+        //--------SECOND TAG BUTTON-----------------
 
         binding.timeFilterSecondButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +107,7 @@ public class FragmentTimeFilter extends DialogFragment {
             }
         };
 
-        // TROISIEME BOUTON
+        //--------APPLY BUTTON-----------------
         binding.timeFilterApplyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,21 +115,19 @@ public class FragmentTimeFilter extends DialogFragment {
             }
         });
 
-        // QUATRIEME BOUTON
+        //--------NEUTRAL BUTTON-----------------
         binding.timeFilterNeutralButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 neutralButtonActions();
             }
         });
-     return view;
-
-
+        return view;
     }
 
-
-
-
+    //--------------------------------
+    //LIFECYCLE
+    //--------------------------------
     @Override
     public void onResume() {
         super.onResume();
@@ -156,8 +142,8 @@ public class FragmentTimeFilter extends DialogFragment {
         super.onAttach(context);
         try {
             mOnInputSelected = (FragmentTimeFilter.OnInputSelected) getActivity();
-        } catch (ClassCastException e){
-            Log.e("TAG", "onAttach ClassCastException: "+ e.getMessage());
+        } catch (ClassCastException e) {
+            Log.e("TAG", "onAttach ClassCastException: " + e.getMessage());
         }
     }
 
@@ -181,7 +167,7 @@ public class FragmentTimeFilter extends DialogFragment {
         getCurrentDateTime();
         DatePickerDialog dialog = new DatePickerDialog(
                 getContext(),
-               listener,
+                listener,
                 year, month, day);
         dialog.show();
     }
@@ -219,14 +205,14 @@ public class FragmentTimeFilter extends DialogFragment {
         return sdf.format(filterDateTime);
     }
 
-    private void applyButtonActions(){
+    private void applyButtonActions() {
         if (mOnInputSelected != null) {
             mOnInputSelected.sendInput(longFirstDateTime, longSecondDateTime);
         }
         getDialog().dismiss();
     }
 
-    private void neutralButtonActions(){
+    private void neutralButtonActions() {
         if (mOnInputSelected != null) {
             mOnInputSelected.sendInput(0, Long.MAX_VALUE);
         }
