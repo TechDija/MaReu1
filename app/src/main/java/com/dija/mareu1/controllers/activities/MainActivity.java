@@ -1,6 +1,7 @@
 package com.dija.mareu1.controllers.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
 
         setSupportActionBar(binding.toolbarMainActivity);
         binding.toolbarMainActivity.setTitleTextColor(getResources().getColor(R.color.white));
-        service = DI.getNewInstanceMeetingApiService(); // <= changing for POC mode
+        service = DI.getMeetingApiService(); // <= changing for POC mode
         initList();
 
         binding.addFab.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
             }
         });
     }
+
 
     //---------------------------
     //MENU CONFIGURATION
@@ -111,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
     @Override
     public void onStart() {
         super.onStart();
-        initList();
         EventBus.getDefault().register(this);
     }
 

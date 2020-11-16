@@ -7,7 +7,6 @@ import com.dija.mareu1.service.MeetingApiService;
 import com.dija.mareu1.service.MeetingsGenerator;
 import com.dija.mareu1.service.RoomGenerator;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -24,7 +22,7 @@ public class MeetingServiceTest {
     private MeetingApiService service;
 
     @BeforeEach
-    public  void setup() {
+    public void setup() {
         service = DI.getNewInstanceMeetingApiService();
     }
 
@@ -72,8 +70,8 @@ public class MeetingServiceTest {
     @DisplayName("filtering on time between 31th october 2020 8:00 and 14h30")
     public void timeFilteringWithSuccess() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - kk:mm");
-        long tag = sdf.parse("31/10/2020 - 08:00").getTime() ;
-        long tag1 = sdf.parse("31/10/2020 - 14:30").getTime() ;
+        long tag = sdf.parse("31/10/2020 - 08:00").getTime();
+        long tag1 = sdf.parse("31/10/2020 - 14:30").getTime();
         List<Meeting> actual = service.timeFilterService(tag, tag1);
         assertEquals(2, actual.size());
     }
