@@ -5,7 +5,7 @@ import com.dija.mareu1.service.MeetingService;
 
 public class DI {
 
-    private static MeetingApiService service = new MeetingService();
+    private static final MeetingApiService service = new MeetingService();
 
     public static MeetingApiService getMeetingApiService() {
         return service;

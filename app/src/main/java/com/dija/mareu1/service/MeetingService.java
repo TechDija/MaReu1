@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingService implements MeetingApiService {
-    private List<Meeting> meetings = MeetingsGenerator.generateMeetings();
-    private List<Room> rooms = RoomGenerator.generateRooms();
+    private final List<Meeting> meetings = MeetingsGenerator.generateMeetings();
+    private final List<Room> rooms = RoomGenerator.generateRooms();
 
     @Override
     public void addMeeting(Meeting meeting) {

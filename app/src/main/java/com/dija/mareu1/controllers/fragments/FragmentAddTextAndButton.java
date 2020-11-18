@@ -11,8 +11,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,7 +28,6 @@ public class FragmentAddTextAndButton extends Fragment {
     private AddTextandbuttonFragmentBinding binding;
     private SecondFragmentListener mListener;
 
-    private String subjectInput;
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
     private TimePickerDialog.OnTimeSetListener mOnTimeSetListener;
     private long longBeginningDateTime;
@@ -60,8 +57,7 @@ public class FragmentAddTextAndButton extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = AddTextandbuttonFragmentBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -75,41 +71,25 @@ public class FragmentAddTextAndButton extends Fragment {
 
         //-------------SETTING DATE TIME PICKER BUTTON--------------
 
-        binding.dateTimeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickDate();
-            }
-        });
-        mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                yearInput = year;
-                monthInput = month;
-                dayInput = dayOfMonth;
-                pickTime();
-            }
+        binding.dateTimeBtn.setOnClickListener(v -> pickDate());
+        mOnDateSetListener = (view1, year, month, dayOfMonth) -> {
+            yearInput = year;
+            monthInput = month;
+            dayInput = dayOfMonth;
+            pickTime();
         };
-        mOnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                hourInput = hourOfDay;
-                minuteInput = minute;
+        mOnTimeSetListener = (view12, hourOfDay, minute) -> {
+            hourInput = hourOfDay;
+            minuteInput = minute;
 
-                getDateTimeLong();
-                binding.dateTimeBtn.setText(getDateTimeString());
-                getEndDateTimeLong();
-            }
+            getDateTimeLong();
+            binding.dateTimeBtn.setText(getDateTimeString());
+            getEndDateTimeLong();
         };
         //-------------SETTING PARTICIPANT ADDING--------------
         binding.participant.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
-        binding.addAddFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addParticipantFabActions();
-            }
-        });
+        binding.addAddFab.setOnClickListener(v -> addParticipantFabActions());
         //------------AUTHORIZING MEETING CREATION--------------
         activateCreateMeetingButton();
     }
@@ -138,7 +118,7 @@ public class FragmentAddTextAndButton extends Fragment {
     //ACTIONS
     //-----------------
 
-    private String getCurrentDateTime() {
+    private void getCurrentDateTime() {
         Calendar calendar = new GregorianCalendar();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
@@ -147,7 +127,7 @@ public class FragmentAddTextAndButton extends Fragment {
         minute = calendar.get(Calendar.MINUTE);
         Date l = calendar.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - kk:mm");
-        return sdf.format(l);
+        sdf.format(l);
     }
 
     private void pickDate() {
@@ -199,7 +179,7 @@ public class FragmentAddTextAndButton extends Fragment {
     }
 
 
-    public final static boolean isValidEmail(CharSequence target) {
+    public static boolean isValidEmail(CharSequence target) {
         if (TextUtils.isEmpty(target)) {
             return false;
         } else {

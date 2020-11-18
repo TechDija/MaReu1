@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
@@ -43,28 +44,13 @@ public class FragmentRoomFilter extends DialogFragment {
         chipsOnCheckedChangeListener();
 
         //--------NEGATIVE BUTTON-----------------
-        binding.negativeActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDialog().dismiss();
-            }
-        });
+        binding.negativeActionButton.setOnClickListener(v -> getDialog().dismiss());
 
         //--------NEUTRAL BUTTON-----------------
-        binding.neutralActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                neutralButtonActions();
-            }
-        });
+        binding.neutralActionButton.setOnClickListener(v -> neutralButtonActions());
 
         //--------POSITIVE BUTTON-----------------
-        binding.positiveActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                positiveButtonActions();
-            }
-        });
+        binding.positiveActionButton.setOnClickListener(v -> positiveButtonActions());
 
         return view;
     }
@@ -76,10 +62,10 @@ public class FragmentRoomFilter extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = ConstraintLayout.LayoutParams.MATCH_PARENT;
         params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        getDialog().getWindow().setAttributes(params);
     }
 
     @Override
@@ -97,14 +83,11 @@ public class FragmentRoomFilter extends DialogFragment {
     //----------------------------
 
     private void chipsOnCheckedChangeListener() {
-        CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    selectedChipData.add(buttonView.getText().toString());
-                } else {
-                    selectedChipData.remove(buttonView.getText().toString());
-                }
+        CompoundButton.OnCheckedChangeListener checkedChangeListener = (buttonView, isChecked) -> {
+            if (isChecked) {
+                selectedChipData.add(buttonView.getText().toString());
+            } else {
+                selectedChipData.remove(buttonView.getText().toString());
             }
         };
         binding.MarioChip.setOnCheckedChangeListener(checkedChangeListener);

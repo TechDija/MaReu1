@@ -16,10 +16,10 @@ import com.dija.mareu1.databinding.ActivityAddBinding;
 import com.dija.mareu1.model.Meeting;
 import com.dija.mareu1.service.MeetingApiService;
 
+import java.util.Objects;
+
 public class AddMeetingActivity extends AppCompatActivity implements FragmentAddRoom.FirstFragmentListener, FragmentAddTextAndButton.SecondFragmentListener {
     private ActivityAddBinding binding;
-    private FragmentAddRoom firstFragment;
-    private FragmentAddTextAndButton secondFragment;
 
     private String occupiedRoomName;
     private String subjectInput;
@@ -64,12 +64,7 @@ public class AddMeetingActivity extends AppCompatActivity implements FragmentAdd
 
         initializeButton();
 
-        binding.createMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createMeetingOnclick();
-            }
-        });
+        binding.createMeeting.setOnClickListener(v -> createMeetingOnclick());
     }
 
 
@@ -82,7 +77,10 @@ public class AddMeetingActivity extends AppCompatActivity implements FragmentAdd
     }
 
     private void createMeetingOnclick() {
-        if (allIsFilled && occupiedRoomName != "Salle de réunion" && longBeginningDateTime != 0 && subjectInput != "") {
+        if (allIsFilled
+                && !Objects.equals(occupiedRoomName, "Salle de réunion")
+                && longBeginningDateTime != 0
+                && !Objects.equals(subjectInput, "")) {
             MeetingApiService service = DI.getMeetingApiService();
             Meeting meeting = new Meeting(
                     this.longBeginningDateTime,
@@ -108,7 +106,7 @@ public class AddMeetingActivity extends AppCompatActivity implements FragmentAdd
     //----------------
 
     private void configureFirstFragment() {
-        firstFragment = (FragmentAddRoom) getSupportFragmentManager().findFragmentById(R.id.first_add_fragment_container);
+        FragmentAddRoom firstFragment = (FragmentAddRoom) getSupportFragmentManager().findFragmentById(R.id.first_add_fragment_container);
         if (firstFragment == null) {
             firstFragment = new FragmentAddRoom();
             getSupportFragmentManager().beginTransaction().replace(R.id.first_add_fragment_container, firstFragment).commit();
@@ -116,7 +114,7 @@ public class AddMeetingActivity extends AppCompatActivity implements FragmentAdd
     }
 
     private void configureSecondFragment() {
-        secondFragment = (FragmentAddTextAndButton) getSupportFragmentManager().findFragmentById(R.id.second_add_fragment_container);
+        FragmentAddTextAndButton secondFragment = (FragmentAddTextAndButton) getSupportFragmentManager().findFragmentById(R.id.second_add_fragment_container);
         if (secondFragment == null) {
             secondFragment = new FragmentAddTextAndButton();
             getSupportFragmentManager().beginTransaction().replace(R.id.second_add_fragment_container, secondFragment).commit();

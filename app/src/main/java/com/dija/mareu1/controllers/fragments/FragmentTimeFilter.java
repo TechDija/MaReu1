@@ -8,8 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,75 +52,43 @@ public class FragmentTimeFilter extends DialogFragment {
 
 
         //--------FIRST TAG BUTTON-----------------
-        binding.timeFilterFirstButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickDate(mOnDateSetListener);
-            }
-        });
-        mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                yearInput = year;
-                monthInput = month;
-                dayInput = dayOfMonth;
-                pickTime(mOnTimeSetListener);
-            }
+        binding.timeFilterFirstButton.setOnClickListener(v -> pickDate(mOnDateSetListener));
+        mOnDateSetListener = (view1, year, month, dayOfMonth) -> {
+            yearInput = year;
+            monthInput = month;
+            dayInput = dayOfMonth;
+            pickTime(mOnTimeSetListener);
         };
-        mOnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                hourInput = hourOfDay;
-                minuteInput = minute;
+        mOnTimeSetListener = (view12, hourOfDay, minute) -> {
+            hourInput = hourOfDay;
+            minuteInput = minute;
 
-                getFirstDateTimeLong();
-                binding.timeFilterFirstButton.setText(getDateTimeString(longFirstDateTime));
-            }
+            getFirstDateTimeLong();
+            binding.timeFilterFirstButton.setText(getDateTimeString(longFirstDateTime));
         };
 
         //--------SECOND TAG BUTTON-----------------
 
-        binding.timeFilterSecondButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickDate(mOnDateSetListener1);
-            }
-        });
-        mOnDateSetListener1 = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                yearInput1 = year;
-                monthInput1 = month;
-                dayInput1 = dayOfMonth;
-                pickTime(mOnTimeSetListener1);
-            }
+        binding.timeFilterSecondButton.setOnClickListener(v -> pickDate(mOnDateSetListener1));
+        mOnDateSetListener1 = (view13, year, month, dayOfMonth) -> {
+            yearInput1 = year;
+            monthInput1 = month;
+            dayInput1 = dayOfMonth;
+            pickTime(mOnTimeSetListener1);
         };
-        mOnTimeSetListener1 = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                hourInput1 = hourOfDay;
-                minuteInput1 = minute;
+        mOnTimeSetListener1 = (view14, hourOfDay, minute) -> {
+            hourInput1 = hourOfDay;
+            minuteInput1 = minute;
 
-                getSecondDateTimeLong();
-                binding.timeFilterSecondButton.setText(getDateTimeString(longSecondDateTime));
-            }
+            getSecondDateTimeLong();
+            binding.timeFilterSecondButton.setText(getDateTimeString(longSecondDateTime));
         };
 
         //--------APPLY BUTTON-----------------
-        binding.timeFilterApplyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                applyButtonActions();
-            }
-        });
+        binding.timeFilterApplyButton.setOnClickListener(v -> applyButtonActions());
 
         //--------NEUTRAL BUTTON-----------------
-        binding.timeFilterNeutralButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                neutralButtonActions();
-            }
-        });
+        binding.timeFilterNeutralButton.setOnClickListener(v -> neutralButtonActions());
         return view;
     }
 
@@ -131,10 +98,10 @@ public class FragmentTimeFilter extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = ConstraintLayout.LayoutParams.MATCH_PARENT;
         params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        getDialog().getWindow().setAttributes(params);
     }
 
     @Override
@@ -151,7 +118,7 @@ public class FragmentTimeFilter extends DialogFragment {
     //ACTIONS
     //----------------------------
 
-    private String getCurrentDateTime() {
+    private void getCurrentDateTime() {
         Calendar calendar = new GregorianCalendar();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
@@ -160,7 +127,7 @@ public class FragmentTimeFilter extends DialogFragment {
         minute = calendar.get(Calendar.MINUTE);
         Date l = calendar.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - kk:mm");
-        return sdf.format(l);
+        sdf.format(l);
     }
 
     private void pickDate(DatePickerDialog.OnDateSetListener listener) {

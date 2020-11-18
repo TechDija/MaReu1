@@ -1,5 +1,6 @@
 package com.dija.mareu1.controllers.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
     private MeetingAdapter mAdapter;
     private MeetingApiService service;
     private List<Meeting> mMeetings;
-    private List<Meeting> mfilteredMeetings;
 
     //----------------------------
     //RECEIVING DATA FROM INTERFACES
@@ -60,16 +60,12 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
         setContentView(view);
 
         setSupportActionBar(binding.toolbarMainActivity);
-        binding.toolbarMainActivity.setTitleTextColor(getResources().getColor(R.color.white));
-        service = DI.getMeetingApiService(); // <= changing for POC mode
+
+        service = DI.getMeetingApiService();
         initList();
 
-        binding.addFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToAddActivity();
-            }
-        });
+
+        binding.addFab.setOnClickListener(v -> navigateToAddActivity());
     }
 
 
@@ -83,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -134,10 +131,9 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
     //---------------
     //ACTIONS
     //---------------
-
     private void initList() {
         this.mMeetings = service.getMeetings();
-        this.mfilteredMeetings = new ArrayList<>(mMeetings);
+        List<Meeting> mfilteredMeetings = new ArrayList<>(mMeetings);
         this.mAdapter = new MeetingAdapter(mfilteredMeetings);
         this.binding.recyclerView.setAdapter(this.mAdapter);
         this.binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));

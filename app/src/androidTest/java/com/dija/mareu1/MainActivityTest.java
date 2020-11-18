@@ -30,8 +30,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertNotNull;
 
 public class MainActivityTest {
-    private static int ITEM_COUNT = 3;
-    private MainActivity mActivity;
+    private static final int ITEM_COUNT = 3;
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule =
@@ -39,8 +38,8 @@ public class MainActivityTest {
 
     @Before
     public void setUp(){
-        mActivity = mActivityRule.getActivity();
-        assertNotNull(mActivity);
+        MainActivity activity = mActivityRule.getActivity();
+        assertNotNull(activity);
     }
 
     @Test

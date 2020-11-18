@@ -28,9 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> implements Filterable {
-    private List<Meeting> mfilteredMeetings;
-    private MeetingApiService service;
-    private List<Meeting> mMeetings;
+    private final List<Meeting> mfilteredMeetings;
+    private final MeetingApiService service;
+    private final List<Meeting> mMeetings;
 
     //-------------------------
     //CONSTRUCTOR
@@ -86,7 +86,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         return Filter;
     }
 
-    private Filter Filter = new Filter() {
+    private final Filter Filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();

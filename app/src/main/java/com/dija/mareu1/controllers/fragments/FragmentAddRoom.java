@@ -24,9 +24,7 @@ public class FragmentAddRoom extends Fragment implements AdapterView.OnItemSelec
     private AddRoomFragmentBinding binding;
     private FirstFragmentListener mListener;
 
-    private MeetingApiService service;
     private List<Room> availableRooms;
-    private String occupiedRoomName;
 
     //--------------------------
     // INTERFACE
@@ -48,14 +46,13 @@ public class FragmentAddRoom extends Fragment implements AdapterView.OnItemSelec
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = AddRoomFragmentBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
-        return view;
+        return binding.getRoot();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        service = DI.getMeetingApiService();
+        MeetingApiService service = DI.getMeetingApiService();
         availableRooms = service.getAllRooms();
 
         //--------------------SETTING SPINNER-------------
@@ -71,7 +68,7 @@ public class FragmentAddRoom extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        occupiedRoomName = parent.getItemAtPosition(position).toString();
+        String occupiedRoomName = parent.getItemAtPosition(position).toString();
         //--------------------SENDING DATA TO ACTIVITY-------------
         mListener.onFirstFragmentSent(occupiedRoomName);
         //--------------------SETTING IMAGE ACCORDING TO ROOM----------------
