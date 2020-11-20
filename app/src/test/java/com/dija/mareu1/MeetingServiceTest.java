@@ -43,6 +43,14 @@ public class MeetingServiceTest {
     }
 
     @Test
+    @DisplayName("get room names")
+    public void getAllRoomNamesWithSuccess() {
+        List<String> actual = service.getAllRoomNames();
+        List<String> expected = RoomGenerator.ROOM_NAMES;
+        assertEquals(expected, actual);
+    }
+
+    @Test
     @DisplayName("deleting a meeting from the meetings list")
     public void deleteMeetingWithSuccess() {
         Meeting meetingToDelete = service.getMeetings().get(0);
@@ -67,6 +75,13 @@ public class MeetingServiceTest {
     }
 
     @Test
+    @DisplayName("filtering on a blank constraint")
+    public void roomFilteringFailureCase() {
+        List<Meeting> actual = service.roomFilter("");
+        assertEquals(3, actual.size());
+    }
+
+    @Test
     @DisplayName("filtering on time between 31th october 2020 8:00 and 14h30")
     public void timeFilteringWithSuccess() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - kk:mm");
@@ -74,5 +89,14 @@ public class MeetingServiceTest {
         long tag1 = sdf.parse("31/10/2020 - 14:30").getTime();
         List<Meeting> actual = service.timeFilterService(tag, tag1);
         assertEquals(2, actual.size());
+    }
+
+    @Test
+    @DisplayName("filtering on null tags")
+    public void timeFilteringFailureCase() {
+        long tag = 0;
+        long tag1 = 0;
+        List<Meeting> actual = service.timeFilterService(tag, tag1);
+        assertEquals(3, actual.size());
     }
 }

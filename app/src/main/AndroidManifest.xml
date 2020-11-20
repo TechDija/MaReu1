@@ -9,12 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaReu1">
-        <activity android:name=".controllers.activities.EditActivity">
-            android:parentActivityName=".controllers.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controllers.activities.MainActivity" />
-        </activity>
         <activity
             android:name=".controllers.activities.AddMeetingActivity"
             android:parentActivityName=".controllers.activities.MainActivity">

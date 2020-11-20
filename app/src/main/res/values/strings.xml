@@ -15,12 +15,29 @@
     <string name="yoshi">Yoshi</string>
     <string name="filtrer">filtrer</string>
     <string name="filtrer_par_horaire">Filtrer par horaire</string>
-    <string name="objet_de_la_r_union">objet de la réunion</string>
-    <string name="choisir_la_date_et_l_heure">choisir la date et l\'horaire</string>
+    <string name="objet_de_la_r_union">Objet de la réunion</string>
+    <string name="choisir_la_date_et_l_heure">Choisir la date et l\'horaire</string>
     <string name="participants_de_la_r_union">Participants de la réunion</string>
     <string name="enregistrer">Créer une nouvelle réunion</string>
     <string name="choisir_la_date">choisir la date</string>
     <string name="choisir_l_horaire">choisir l\'horaire</string>
+    <string name="add">Add_</string>
+    <string name="deux_adresses_mails_valides">Veuillez entrer au moins deux adresses emails valides</string>
+    <string name="veuillez_choisir_une_salle">veuillez choisir une salle</string>
+    <string name="veuillez_choisir_un_horaire">veuillez choisir un horaire</string>
+    <string name="au_moins_deux_participants">veuillez ajouter au moins deux participants</string>
+    <string name="horaire_de_d_but">Horaire de début</string>
+    <string name="error_time">Veuillez choisir un horaire</string>
+    <string name="horaire_de_début">Horaire de début</string>
+    <string name="horaire_de_fin">Horaire de fin</string>
+    <string name="pastille_de_la_salle_de_r_union">pastille de la salle de réunion</string>
+    <string name="pas_de_r_union_programm_e">Pas de réunion programmée !</string>
+    <string name="first_line_example">Réunion A - 16h00 - Wario</string>
+    <string name="second_line_example">dija@lamzone.com, maddy@lamzone.com</string>
+    <string name="annuler">ANNULER</string>
+    <string name="appliquer">APPLIQUER</string>
+    <string name="annuler_le_filtre">ANNULER LE FILTRE</string>
+    <string name="et">Et</string>
     <string-array name="rooms">
         <item>Mario</item>
         <item>Luigi</item>

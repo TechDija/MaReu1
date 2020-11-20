@@ -9,6 +9,7 @@ import java.util.List;
 public class MeetingService implements MeetingApiService {
     private final List<Meeting> meetings = MeetingsGenerator.generateMeetings();
     private final List<Room> rooms = RoomGenerator.generateRooms();
+    private final List<String> roomNames = RoomGenerator.generateRoomNames();
 
     @Override
     public void addMeeting(Meeting meeting) {
@@ -28,6 +29,11 @@ public class MeetingService implements MeetingApiService {
     @Override
     public List<Room> getAllRooms() {
         return rooms;
+    }
+
+    @Override
+    public List<String> getAllRoomNames() {
+        return roomNames;
     }
 
     @Override

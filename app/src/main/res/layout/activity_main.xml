@@ -28,24 +28,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/empty_textview"
-        android:text="Pas de réunion programmée l"
+        android:text="@string/pas_de_r_union_programm_e"
         android:textColor="#061924"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:drawableTopCompat="@drawable/empty_dataset" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/empty_imageview"
-        android:background="@drawable/empty_dataset"
-        android:layout_marginBottom="@dimen/activity_add_30_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/empty_textview"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
@@ -56,7 +48,8 @@
         android:layout_margin="@dimen/activity_main_FAB_margin"
         app:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/add">
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

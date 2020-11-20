@@ -39,15 +39,14 @@ public class AddActivityTest {
     }
 
     @Test
-    public void AddMeetingActivity_fragments_areEntirelyDisplayed(){
-        onView(withId(R.id.first_add_fragment_container))
+    public void AddMeetingActivity_isEntirelyDisplayed() {
+        onView(withId(R.id.add_container_scrollview))
                 .check(matches(isCompletelyDisplayed()));
-        onView(withId(R.id.second_add_fragment_container))
-                .check(matches(isCompletelyDisplayed()));
+
     }
 
     @Test
-    public void AddMeetingActivity_calendarButton_onClick_displaysDatePicker(){
+    public void AddMeetingActivity_calendarButton_onClick_displaysDatePicker() {
         onView(withId(R.id.dateTimeBtn))
                 .perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
@@ -55,8 +54,7 @@ public class AddActivityTest {
     }
 
     @Test
-    public void AddMeetingActivity_createMeetingButton_createMeetings_ifAllFieldsAreFilled(){
-        // TEST TO BE EXECUTED OUT OF POC MODE
+    public void AddMeetingActivity_createMeetingButton_createMeetings_ifAllFieldsAreFilled() {
         onView(withId(R.id.room_spinner)).perform(click());
         onView(withText("Mario")).perform(click());
 
@@ -85,8 +83,7 @@ public class AddActivityTest {
     }
 
     @Test
-    public void AddMeetingActivity_createMeetingButton_doesNotCreateMeetings_ifParticipantFieldIsEmpty(){
-        // TEST TO BE EXECUTED OUT OF POC MODE
+    public void AddMeetingActivity_createMeetingButton_doesNotCreateMeetings_ifParticipantFieldIsEmpty() {
         onView(withId(R.id.room_spinner)).perform(click());
         onView(withText("Mario")).perform(click());
 
@@ -101,6 +98,5 @@ public class AddActivityTest {
 
         onView(withId(R.id.add_container_scrollview))
                 .check(matches(isDisplayed()));
-
     }
 }

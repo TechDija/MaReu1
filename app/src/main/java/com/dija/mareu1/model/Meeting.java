@@ -1,25 +1,25 @@
 package com.dija.mareu1.model;
 
 public class Meeting {
-    private Long beginningDateTime;
-    private Long endDateTime;
+    private long beginningDateTime;
+    private long endDateTime;
     private String room;
     private String subject;
     private String people;
 
-    public Long getBeginningDateTime() {
+    public long getBeginningDateTime() {
         return beginningDateTime;
     }
 
-    public void setBeginningDateTime(Long beginningTime) {
+    public void setBeginningDateTime(long beginningTime) {
         this.beginningDateTime = beginningTime;
     }
 
-    public Long getEndDateTime() {
+    public long getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(Long endTime) {
+    public void setEndDateTime(long endTime) {
         this.endDateTime = endTime;
     }
 
@@ -47,13 +47,11 @@ public class Meeting {
         this.people = people;
     }
 
-    public Meeting(Long beginningDateTime, Long endDateTime, String room, String subject, String people) {
+    public Meeting(long beginningDateTime, long endDateTime, String room, String subject, String people) {
         this.beginningDateTime = beginningDateTime;
         this.endDateTime = endDateTime;
         this.room = room;
         this.subject = subject;
         this.people = people;
-
-
     }
 }

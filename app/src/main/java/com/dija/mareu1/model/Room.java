@@ -3,10 +3,13 @@ package com.dija.mareu1.model;
 public class Room {
     private String roomName;
     private String roomImage;
+    private boolean roomTag = false;
 
     public Room(String roomName, String roomImage) {
         this.roomName = roomName;
         this.roomImage = roomImage;
+        this.roomTag = roomTag;
+
 
     }
 
@@ -24,5 +27,13 @@ public class Room {
 
     public void setRoomImage(String roomImage) {
         this.roomImage = roomImage;
+    }
+
+    public boolean getRoomTag() {
+        return roomTag;
+    }
+
+    public void setRoomTag(boolean roomTag) {
+        this.roomTag = roomTag;
     }
 }

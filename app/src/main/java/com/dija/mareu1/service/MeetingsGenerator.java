@@ -1,5 +1,7 @@
 package com.dija.mareu1.service;
 
+import android.annotation.SuppressLint;
+
 import com.dija.mareu1.model.Meeting;
 
 import java.text.ParseException;
@@ -7,9 +9,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class MeetingsGenerator {
 
+    @SuppressLint("SimpleDateFormat")
     static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm");
 
 
@@ -26,7 +30,7 @@ public abstract class MeetingsGenerator {
     static long parser(String string) {
         long milliseconds = 0;
         try {
-            milliseconds = sdf.parse(string).getTime();
+            milliseconds = Objects.requireNonNull(sdf.parse(string)).getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }

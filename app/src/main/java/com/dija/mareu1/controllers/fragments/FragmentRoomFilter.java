@@ -1,8 +1,6 @@
 package com.dija.mareu1.controllers.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +12,25 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
+import com.dija.mareu1.DI.DI;
+import com.dija.mareu1.R;
 import com.dija.mareu1.databinding.RoomFilterFragmentBinding;
+import com.dija.mareu1.events.RoomFilterEvent;
+import com.dija.mareu1.model.Room;
+import com.dija.mareu1.service.MeetingApiService;
+import com.google.android.material.chip.Chip;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentRoomFilter extends DialogFragment {
     private RoomFilterFragmentBinding binding;
-    public OnInputSelected mOnInputSelected;
 
-    private ArrayList<String> selectedChipData;
-
-    //--------------------------
-    // INTERFACE
-    //-------------------------
-    public interface OnInputSelected {
-        void sendInput(String filteredData);
-    }
+    private List<String> selectedChipData;
+    private MeetingApiService service;
+    private List<String> roomsNames;
 
     //-------------------------------
     //ON CREATE VIEW
@@ -39,9 +40,10 @@ public class FragmentRoomFilter extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = RoomFilterFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
         selectedChipData = new ArrayList<>();
-        chipsOnCheckedChangeListener();
+        service = DI.getMeetingApiService();
+
+        populateChipGroup();
 
         //--------NEGATIVE BUTTON-----------------
         binding.negativeActionButton.setOnClickListener(v -> getDialog().dismiss());
@@ -58,7 +60,6 @@ public class FragmentRoomFilter extends DialogFragment {
     //----------------------------
     //LIFECYCLE
     //----------------------------
-
     @Override
     public void onResume() {
         super.onResume();
@@ -68,51 +69,51 @@ public class FragmentRoomFilter extends DialogFragment {
         getDialog().getWindow().setAttributes(params);
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            mOnInputSelected = (OnInputSelected) getActivity();
-        } catch (ClassCastException e) {
-            Log.e("TAG", "onAttach ClassCastException: " + e.getMessage());
-        }
-    }
-
     //----------------------------
     //ACTIONS
     //----------------------------
+    private void populateChipGroup() {
+        List<Room> rooms = service.getAllRooms();
+        for (Room room : rooms) {
+            View view = getLayoutInflater().inflate(R.layout.chip_layout, null);
+            Chip chip = (Chip) view;
+            chip.setText(room.getRoomName());
+            chip.setChecked(room.getRoomTag());
+            chip.setOnCheckedChangeListener(chipsOnCheckedChangeListener());
+            binding.chipGroupRooms.addView(chip);
+        }
+    }
 
-    private void chipsOnCheckedChangeListener() {
+    private Chip.OnCheckedChangeListener chipsOnCheckedChangeListener() {
         CompoundButton.OnCheckedChangeListener checkedChangeListener = (buttonView, isChecked) -> {
+            List<Room> rooms = service.getAllRooms();
             if (isChecked) {
                 selectedChipData.add(buttonView.getText().toString());
+                for (Room room : rooms) {
+                    if (buttonView.getText().toString().contains(room.getRoomName())) {
+                        room.setRoomTag(true);
+                    }
+                }
             } else {
                 selectedChipData.remove(buttonView.getText().toString());
+                for (Room room : rooms) {
+                    if (buttonView.getText().toString().contains(room.getRoomName())) {
+                        room.setRoomTag(false);
+                    }
+                }
             }
         };
-        binding.MarioChip.setOnCheckedChangeListener(checkedChangeListener);
-        binding.LuigiChip.setOnCheckedChangeListener(checkedChangeListener);
-        binding.BowserChip.setOnCheckedChangeListener(checkedChangeListener);
-        binding.BowserChip.setOnCheckedChangeListener(checkedChangeListener);
-        binding.WarioChip.setOnCheckedChangeListener(checkedChangeListener);
-        binding.KoopaChip.setOnCheckedChangeListener(checkedChangeListener);
-        binding.DKChip.setOnCheckedChangeListener(checkedChangeListener);
-        binding.DaisyChip.setOnCheckedChangeListener(checkedChangeListener);
-        binding.PeachChip.setOnCheckedChangeListener(checkedChangeListener);
-        binding.ToadChip.setOnCheckedChangeListener(checkedChangeListener);
+        return checkedChangeListener;
     }
 
     private void neutralButtonActions() {
-        if (mOnInputSelected != null) {
-            mOnInputSelected.sendInput("Mario, Luigi, Bowser, Peach, Daisy, Koopa, Donkey-Kong, Wario, Toad, Yoshi");
-        }
+        roomsNames = service.getAllRoomNames();
+        EventBus.getDefault().post(new RoomFilterEvent(roomsNames.toString()));
         getDialog().dismiss();
     }
 
     private void positiveButtonActions() {
-        if (mOnInputSelected != null) {
-            mOnInputSelected.sendInput(selectedChipData.toString());
-        }
+        EventBus.getDefault().post(new RoomFilterEvent(selectedChipData.toString()));
         getDialog().dismiss();
     }
 }

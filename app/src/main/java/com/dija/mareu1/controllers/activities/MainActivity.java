@@ -2,8 +2,9 @@ package com.dija.mareu1.controllers.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +20,8 @@ import com.dija.mareu1.controllers.fragments.FragmentRoomFilter;
 import com.dija.mareu1.controllers.fragments.FragmentTimeFilter;
 import com.dija.mareu1.databinding.ActivityMainBinding;
 import com.dija.mareu1.events.DeleteMeetingEvent;
+import com.dija.mareu1.events.RoomFilterEvent;
+import com.dija.mareu1.events.TimeFilterEvent;
 import com.dija.mareu1.model.Meeting;
 import com.dija.mareu1.service.MeetingApiService;
 import com.dija.mareu1.view.MeetingAdapter;
@@ -29,25 +32,13 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements FragmentRoomFilter.OnInputSelected, FragmentTimeFilter.OnInputSelected {
+public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     private MeetingAdapter mAdapter;
     private MeetingApiService service;
     private List<Meeting> mMeetings;
-
-    //----------------------------
-    //RECEIVING DATA FROM INTERFACES
-    //-----------------------------
-    @Override
-    public void sendInput(String filteredData) {
-        mAdapter.getFilter().filter(filteredData);
-    }
-
-    @Override
-    public void sendInput(long tag, long tag1) {
-        mAdapter.timeFilter(tag, tag1);
-    }
+    private SharedPreferences mSharedPreferences;
 
     //---------------------------
     //ON CREATE
@@ -58,12 +49,12 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getBaseContext());
 
         setSupportActionBar(binding.toolbarMainActivity);
 
         service = DI.getMeetingApiService();
         initList();
-
 
         binding.addFab.setOnClickListener(v -> navigateToAddActivity());
     }
@@ -83,15 +74,13 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_filter1:
+            case R.id.menu_filter:
                 return true;
-            case R.id.menu_filter2:
-                FragmentRoomFilter dialog = new FragmentRoomFilter();
-                dialog.show(getSupportFragmentManager(), "FragmentRoomFilter");
+            case R.id.menu_room_filter:
+                menuRoomFilterAction();
                 return true;
-            case R.id.menu_filter3:
-                FragmentTimeFilter dial = new FragmentTimeFilter();
-                dial.show(getSupportFragmentManager(), "FragmentTimeFilter");
+            case R.id.menu_time_filter:
+                menuTimeFilterAction();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -117,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+        mSharedPreferences.edit().putString("tag", "").apply();
+        mSharedPreferences.edit().putString("tag1", "").apply();
     }
 
     //---------------------------
@@ -126,6 +117,16 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
     public void onDeleteMeeting(DeleteMeetingEvent event) {
         service.deleteMeeting(event.meeting);
         initList();
+    }
+
+    @Subscribe
+    public void onRoomFilter(RoomFilterEvent event) {
+        mAdapter.getFilter().filter(event.filteredData);
+    }
+
+    @Subscribe
+    public void onTimeFilter(TimeFilterEvent event) {
+        mAdapter.timeFilter(event.tag, event.tag1);
     }
 
     //---------------
@@ -149,12 +150,16 @@ public class MainActivity extends AppCompatActivity implements FragmentRoomFilte
         if (mMeetings.isEmpty()) {
             binding.recyclerView.setVisibility(View.GONE);
             binding.emptyTextview.setVisibility(View.VISIBLE);
-            binding.emptyImageview.setVisibility(View.VISIBLE);
-        } else {
-            binding.recyclerView.setVisibility(View.VISIBLE);
-            binding.emptyTextview.setVisibility(View.GONE);
-            binding.emptyImageview.setVisibility(View.GONE);
         }
     }
 
+    private void menuRoomFilterAction() {
+        FragmentRoomFilter dialog = new FragmentRoomFilter();
+        dialog.show(getSupportFragmentManager(), "FragmentRoomFilter");
+    }
+
+    private void menuTimeFilterAction() {
+        FragmentTimeFilter dial = new FragmentTimeFilter();
+        dial.show(getSupportFragmentManager(), "FragmentTimeFilter");
+    }
 }

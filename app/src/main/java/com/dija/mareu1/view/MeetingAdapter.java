@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dija.mareu1.DI.DI;
 import com.dija.mareu1.R;
-import com.dija.mareu1.controllers.fragments.FragmentAddRoom;
+import com.dija.mareu1.controllers.activities.AddMeetingActivity;
 import com.dija.mareu1.databinding.ItemMeetingBinding;
 import com.dija.mareu1.events.DeleteMeetingEvent;
 import com.dija.mareu1.model.Meeting;
@@ -35,7 +35,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     //-------------------------
     //CONSTRUCTOR
     //-------------------------
-
     public MeetingAdapter(List<Meeting> meetings) {
         this.mfilteredMeetings = meetings;
         mMeetings = new ArrayList<>(mfilteredMeetings);
@@ -124,10 +123,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         @SuppressLint("SetTextI18n")
         public void updateWithMeeting(Meeting meeting) {
             Context c = binding.firstLineItem.getContext();
-            String date = convertDate(meeting.getBeginningDateTime().toString(), "kk:mm");
+            String date = convertDate(String.valueOf(meeting.getBeginningDateTime()), "kk:mm");
             for (Room room : service.getAllRooms()) {
                 if (meeting.getRoom() == room.getRoomName()) {
-                    binding.imageColorItem.setImageResource(FragmentAddRoom.getImageId(c, room.getRoomImage()));
+                    binding.imageColorItem.setImageResource(AddMeetingActivity.getImageId(c, room.getRoomImage()));
                 }
             }
             binding.firstLineItem.setText(meeting.getSubject() + " - " + date + " - " + meeting.getRoom());

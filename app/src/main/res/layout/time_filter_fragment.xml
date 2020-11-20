@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="8dp"
+    android:layout_margin="@dimen/add_activity_sideMargin"
     android:layout_height="match_parent">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choix des réunions entre "
+        android:text="@string/filtrer_par_horaire"
         android:id="@+id/choix"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:layout_margin="16dp"
@@ -17,21 +17,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <Button
+    <TextView
         android:id="@+id/time_filter_first_button"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Horaire de début"
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
+        android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/choix"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/time_filter_first_button"
+        app:layout_constraintEnd_toEndOf="@id/time_filter_first_button"
+        app:layout_constraintStart_toStartOf="@id/time_filter_first_button"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Et"
+        android:text="@string/et"
         android:id="@+id/et"
         android:layout_gravity="center_horizontal"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -40,21 +48,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/time_filter_first_button"/>
 
-    <Button
+    <TextView
         android:id="@+id/time_filter_second_button"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Horaire de fin"
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
+        android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/et"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/time_filter_second_button"
+        app:layout_constraintEnd_toEndOf="@id/time_filter_second_button"
+        app:layout_constraintStart_toStartOf="@id/time_filter_second_button"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_add_30_margin"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/time_filter_second_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +80,7 @@
         android:id="@+id/time_filter_neutral_button"
         android:layout_width="wrap_content"
         android:layout_margin="16dp"
-        android:text="ANNULER LE FILTRE"
+        android:text="@string/annuler_le_filtre"
         android:textColor="@color/purple_500"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/time_filter_second_button"
@@ -75,7 +91,7 @@
         android:id="@+id/time_filter_apply_button"
         android:layout_width="wrap_content"
         android:layout_margin="16dp"
-        android:text="APPLIQUER"
+        android:text="@string/appliquer"
         android:textColor="@color/purple_500"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/time_filter_second_button"

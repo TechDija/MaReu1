@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="110dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,13 +12,14 @@
         android:id="@+id/image_color_item"
         android:layout_margin="@dimen/item_image_margin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/firstLine_item"
-        android:text="Réunion A - 16h00 - Wario"
+        android:text="@string/first_line_example"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="@dimen/item_firstLine_text_size"
@@ -33,7 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/secondLine_item"
-        android:text="dija@lamzone.com, maddy@lamzone.com"
+        android:text="@string/second_line_example"
         android:textColor="@color/black"
         android:layout_marginStart="@dimen/item_line_marginStart"
         android:layout_marginTop="@dimen/item_secondLine_marginTop"
@@ -52,6 +54,7 @@
         android:background="@drawable/delete_24"
         android:layout_margin="@dimen/item_image_margin"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ContentDescription"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,6 @@ import java.util.List;
 public class RoomGenerator {
 
     public final static List<Room> ROOMS = Arrays.asList(
-            new Room("Salle de réunion", "lamzone"),
             new Room("Mario", "pastille_rouge"),
             new Room("Luigi", "pastille_vert"),
             new Room("Peach", "pastel_rose"),
@@ -22,8 +21,8 @@ public class RoomGenerator {
             new Room("Yoshi", "pastel_bleu"));
 
 
-    static List<String> ROOM_NAMES = Arrays.asList(
-            "Choix de la salle", "Mario", "Luigi", "Bowser", "Peach", "Daisy", "Koopa", "Donkey-Kong", "Wario", "Toad", "Yoshi");
+    public final static List<String> ROOM_NAMES = Arrays.asList(
+            "Mario", "Luigi", "Bowser", "Peach", "Daisy", "Koopa", "Donkey-Kong", "Wario", "Toad", "Yoshi");
 
     static List<Room> generateRooms() {
         return new ArrayList<>(ROOMS);

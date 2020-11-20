@@ -14,6 +14,8 @@ public interface MeetingApiService {
 
     List<Room> getAllRooms();
 
+    List<String> getAllRoomNames();
+
     List<Meeting> roomFilter(CharSequence constraint);
 
     List<Meeting> timeFilterService(long tag, long tag1);
