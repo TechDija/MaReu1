@@ -9,8 +9,6 @@ public class Room {
         this.roomName = roomName;
         this.roomImage = roomImage;
         this.roomTag = roomTag;
-
-
     }
 
     public String getRoomName() {

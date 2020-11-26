@@ -52,14 +52,14 @@ public class MeetingService implements MeetingApiService {
     }
 
     @Override
-    public List<Meeting> timeFilterService(long tag, long tag1) {
+    public List<Meeting> timeFilterService(long firstDate, long secondDate) {
         List<Meeting> filteredList = new ArrayList<>();
-        if (tag == 0 && tag1 == 0) {
+        if (firstDate == 0 && secondDate == 0) {
             filteredList.addAll(meetings);
         } else {
             for (Meeting meeting : meetings) {
-                if ((tag < meeting.getBeginningDateTime() && meeting.getBeginningDateTime() < tag1)
-                        || (tag < meeting.getEndDateTime() && meeting.getEndDateTime() < tag1)) {
+                if ((firstDate < meeting.getBeginningDateTime() && meeting.getBeginningDateTime() < secondDate)
+                        || (firstDate < meeting.getEndDateTime() && meeting.getEndDateTime() < secondDate)) {
                     filteredList.add(meeting);
                 }
             }

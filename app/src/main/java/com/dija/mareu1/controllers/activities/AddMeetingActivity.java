@@ -173,10 +173,15 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
 
     private void addParticipantFabActions() {
         String participantInput = binding.participant.getText().toString();
+        String participants = binding.participantTextview.getText().toString();
         if (isValidEmail(participantInput)) {
-            binding.addActivityChipgroup.addView(addParticipantChip(participantInput));
-            binding.participantTextview.append(participantInput + ", ");
-            binding.participant.setText("");
+            if (!participants.contains(participantInput)) {
+                binding.addActivityChipgroup.addView(addParticipantChip(participantInput));
+                binding.participantTextview.append(participantInput + ", ");
+                binding.participant.setText("");
+            } else {
+                Toast.makeText(this, "Cette adresse e-mail est déjà enregistrée.", Toast.LENGTH_LONG).show();
+            }
         } else {
             Toast.makeText(this, "Veuillez entrer une adresse e-mail valide.", Toast.LENGTH_LONG).show();
         }

@@ -14,12 +14,14 @@ import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class MeetingServiceTest {
     private MeetingApiService service;
+    private Meeting testMeeting = new Meeting (parser("31/10/2020 - 08:00"), parser("31/10/2020 - 08:45"), "Mario", "Réunion B", "paul@lamzone.com, viviane@lamzone.com");
 
     @BeforeEach
     public void setup() {
@@ -35,7 +37,7 @@ public class MeetingServiceTest {
     }
 
     @Test
-    @DisplayName("get rooms")
+    @DisplayName("Getting all rooms")
     public void getAllRoomsWithSuccess() {
         List<Room> actual = service.getAllRooms();
         List<Room> expected = RoomGenerator.ROOMS;
@@ -43,7 +45,7 @@ public class MeetingServiceTest {
     }
 
     @Test
-    @DisplayName("get room names")
+    @DisplayName("Getting all room names")
     public void getAllRoomNamesWithSuccess() {
         List<String> actual = service.getAllRoomNames();
         List<String> expected = RoomGenerator.ROOM_NAMES;
@@ -51,52 +53,59 @@ public class MeetingServiceTest {
     }
 
     @Test
-    @DisplayName("deleting a meeting from the meetings list")
+    @DisplayName("Deleting a meeting from the meetings list")
     public void deleteMeetingWithSuccess() {
-        Meeting meetingToDelete = service.getMeetings().get(0);
-        service.deleteMeeting(meetingToDelete);
-        assertFalse(service.getMeetings().contains(meetingToDelete));
+        service.deleteMeeting(testMeeting);
+        assertFalse(MeetingsGenerator.MEETINGS.contains(testMeeting));
     }
 
     @Test
-    @DisplayName("adding a meeting to the meetings list")
+    @DisplayName ("Adding a meeting to the meetings list")
     public void addMeetingsWithSuccess() {
-        Meeting meetingToCopy = service.getMeetings().get(0);
-        Meeting meetingToAdd = meetingToCopy;
-        service.addMeeting(meetingToAdd);
+        service.addMeeting(testMeeting);
         assertEquals(4, service.getMeetings().size());
     }
 
     @Test
-    @DisplayName("filtering on room name 'Mario'")
+    @DisplayName("Room filtering on name 'Mario'")
     public void roomFilteringWithSuccess() {
         List<Meeting> actual = service.roomFilter("Mario");
         assertEquals(1, actual.size());
     }
 
     @Test
-    @DisplayName("filtering on a blank constraint")
+    @DisplayName("Room filtering on a blank constraint")
     public void roomFilteringFailureCase() {
         List<Meeting> actual = service.roomFilter("");
         assertEquals(3, actual.size());
     }
 
     @Test
-    @DisplayName("filtering on time between 31th october 2020 8:00 and 14h30")
-    public void timeFilteringWithSuccess() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - kk:mm");
-        long tag = sdf.parse("31/10/2020 - 08:00").getTime();
-        long tag1 = sdf.parse("31/10/2020 - 14:30").getTime();
-        List<Meeting> actual = service.timeFilterService(tag, tag1);
+    @DisplayName("Filtering on time between 30th november 2020 8:00 and 14h30")
+    public void timeFilteringWithSuccess()  {
+        long firstDate = parser("30/11/2020 - 08:00");
+        long secondDate = parser("30/11/2020 - 14:30");
+        List<Meeting> actual = service.timeFilterService(firstDate, secondDate);
         assertEquals(2, actual.size());
     }
 
     @Test
-    @DisplayName("filtering on null tags")
+    @DisplayName("Filtering on null tags")
     public void timeFilteringFailureCase() {
-        long tag = 0;
-        long tag1 = 0;
-        List<Meeting> actual = service.timeFilterService(tag, tag1);
+        long firstDate = 0;
+        long secondDate = 0;
+        List<Meeting> actual = service.timeFilterService(firstDate, secondDate);
         assertEquals(3, actual.size());
+    }
+
+    static long parser(String string) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - kk:mm");
+        long milliseconds = 0;
+        try {
+            milliseconds = Objects.requireNonNull(sdf.parse(string)).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return milliseconds;
     }
 }

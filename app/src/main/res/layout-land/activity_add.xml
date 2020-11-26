@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_container_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/add_container_scrollview">
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_add_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bleu_royal"
+        android:theme="@style/AppToolbar"
+        android:nestedScrollingEnabled="false"
+        app:title="Nouvelle Réunion"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
+        app:titleMarginStart="@dimen/activity_add_title_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_add_activity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/bleu_royal"
-            android:theme="@style/AppToolbar"
-            app:title="Nouvelle Réunion"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
-            app:titleMarginStart="@dimen/activity_add_title_margin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:layout_width="@dimen/activity_add_lamzone_image"
             android:layout_height="@dimen/activity_add_lamzone_image"
             android:id="@+id/room_image"
             android:layout_margin="@dimen/activity_add_30_margin"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_add_activity"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/middle_view_add_activity"
             android:contentDescription="@string/pastille_de_la_salle_de_r_union" />
@@ -61,7 +67,7 @@
             android:layout_marginTop="@dimen/activity_add_30_margin"
             android:layout_marginStart="@dimen/add_activity_sideMargin"
             android:layout_marginEnd="@dimen/add_activity_sideMargin"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_add_activity"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/middle_view_add_activity"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -189,3 +195,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
+</LinearLayout>

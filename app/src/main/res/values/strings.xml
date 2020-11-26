@@ -21,7 +21,7 @@
     <string name="enregistrer">Créer une nouvelle réunion</string>
     <string name="choisir_la_date">choisir la date</string>
     <string name="choisir_l_horaire">choisir l\'horaire</string>
-    <string name="add">Add_</string>
+    <string name="add">Add</string>
     <string name="deux_adresses_mails_valides">Veuillez entrer au moins deux adresses emails valides</string>
     <string name="veuillez_choisir_une_salle">veuillez choisir une salle</string>
     <string name="veuillez_choisir_un_horaire">veuillez choisir un horaire</string>

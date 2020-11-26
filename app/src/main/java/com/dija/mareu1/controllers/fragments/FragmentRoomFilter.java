@@ -48,9 +48,6 @@ public class FragmentRoomFilter extends DialogFragment {
         //--------NEGATIVE BUTTON-----------------
         binding.negativeActionButton.setOnClickListener(v -> getDialog().dismiss());
 
-        //--------NEUTRAL BUTTON-----------------
-        binding.neutralActionButton.setOnClickListener(v -> neutralButtonActions());
-
         //--------POSITIVE BUTTON-----------------
         binding.positiveActionButton.setOnClickListener(v -> positiveButtonActions());
 
@@ -106,14 +103,13 @@ public class FragmentRoomFilter extends DialogFragment {
         return checkedChangeListener;
     }
 
-    private void neutralButtonActions() {
-        roomsNames = service.getAllRoomNames();
-        EventBus.getDefault().post(new RoomFilterEvent(roomsNames.toString()));
-        getDialog().dismiss();
-    }
-
     private void positiveButtonActions() {
-        EventBus.getDefault().post(new RoomFilterEvent(selectedChipData.toString()));
+        if (selectedChipData.isEmpty()) {
+            roomsNames = service.getAllRoomNames();
+            EventBus.getDefault().post(new RoomFilterEvent(roomsNames.toString()));
+        } else {
+            EventBus.getDefault().post(new RoomFilterEvent(selectedChipData.toString()));
+        }
         getDialog().dismiss();
     }
 }

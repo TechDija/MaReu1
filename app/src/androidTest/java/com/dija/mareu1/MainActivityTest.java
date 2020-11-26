@@ -14,6 +14,7 @@ import com.dija.mareu1.utils.DeleteViewAction;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public class MainActivityTest {
     @Test
     public void MeetingListActionFloatingButton_onClick_navigatesToAddActivity() {
         ViewInteraction floatingActionButton = onView(
-                allOf(withId(R.id.add_fab), withContentDescription("Add_"),
+                allOf(withId(R.id.add_fab), withContentDescription("Add"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -75,11 +76,11 @@ public class MainActivityTest {
                         isDisplayed()));
         floatingActionButton.perform(click());
 
-        ViewInteraction spinner = onView(
-                allOf(withId(R.id.room_spinner),
-                        withParent(withParent(withId(R.id.add_container_scrollview))),
+        ViewInteraction imageView = onView(
+                allOf(withId(R.id.room_image), withContentDescription("pastille de la salle de réunion"),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
-        spinner.check(matches(isDisplayed()));
+        imageView.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(

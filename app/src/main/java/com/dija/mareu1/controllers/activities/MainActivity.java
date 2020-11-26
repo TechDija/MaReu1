@@ -2,9 +2,7 @@ package com.dija.mareu1.controllers.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,12 +31,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
     ActivityMainBinding binding;
-    private MeetingAdapter mAdapter;
     private MeetingApiService service;
+
+    private MeetingAdapter mAdapter;
     private List<Meeting> mMeetings;
-    private SharedPreferences mSharedPreferences;
+    private long firstDate;
+    private long secondDate;
 
     //---------------------------
     //ON CREATE
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getBaseContext());
 
         setSupportActionBar(binding.toolbarMainActivity);
 
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.addFab.setOnClickListener(v -> navigateToAddActivity());
     }
-
 
     //---------------------------
     //MENU CONFIGURATION
@@ -106,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-        mSharedPreferences.edit().putString("tag", "").apply();
-        mSharedPreferences.edit().putString("tag1", "").apply();
     }
 
     //---------------------------
@@ -126,7 +121,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe
     public void onTimeFilter(TimeFilterEvent event) {
-        mAdapter.timeFilter(event.tag, event.tag1);
+        mAdapter.timeFilter(event.firstDate, event.secondDate);
+        this.firstDate = event.firstDate;
+        this.secondDate = event.secondDate;
     }
 
     //---------------
@@ -161,5 +158,6 @@ public class MainActivity extends AppCompatActivity {
     private void menuTimeFilterAction() {
         FragmentTimeFilter dial = new FragmentTimeFilter();
         dial.show(getSupportFragmentManager(), "FragmentTimeFilter");
+        EventBus.getDefault().post(new TimeFilterEvent(firstDate, secondDate));
     }
 }

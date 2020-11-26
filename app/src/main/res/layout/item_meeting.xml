@@ -13,6 +13,7 @@
         android:layout_margin="@dimen/item_image_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -53,6 +54,7 @@
         android:id="@+id/image_bin_item"
         android:background="@drawable/delete_24"
         android:layout_margin="@dimen/item_image_margin"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="ContentDescription"/>

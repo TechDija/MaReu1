@@ -3,15 +3,15 @@ package com.dija.mareu1.controllers.fragments;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
 import com.dija.mareu1.R;
@@ -27,7 +27,6 @@ import java.util.GregorianCalendar;
 
 public class FragmentTimeFilter extends DialogFragment {
     private TimeFilterFragmentBinding binding;
-    private SharedPreferences mSharedPreferences;
 
     private DatePickerDialog.OnDateSetListener mOnDateSetListener, mOnDateSetListener1;
     private TimePickerDialog.OnTimeSetListener mOnTimeSetListener, mOnTimeSetListener1;
@@ -45,9 +44,8 @@ public class FragmentTimeFilter extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = TimeFilterFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        setButtonText();
 
-        setButtonsText();
 
         //--------FIRST TAG BUTTON-----------------
         binding.timeFilterFirstButton.setOnClickListener(v -> pickDate(mOnDateSetListener));
@@ -62,8 +60,8 @@ public class FragmentTimeFilter extends DialogFragment {
             minuteInput = minute;
 
             getFirstDateTimeLong();
-            mSharedPreferences.edit().putString("tag", getDateTimeString(longFirstDateTime)).apply();
-            binding.timeFilterFirstButton.setText(getDateTimeString(longFirstDateTime));
+            binding.timeFilterFirstButton.setText("De :   " + getDateTimeString(longFirstDateTime));
+            binding.timeFilterFirstButton.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
 
         };
 
@@ -80,9 +78,9 @@ public class FragmentTimeFilter extends DialogFragment {
             minuteInput1 = minute;
 
             getSecondDateTimeLong();
-            //mRunTimeData.setTag1(longSecondDateTime);
-            mSharedPreferences.edit().putString("tag1", getDateTimeString(longSecondDateTime)).apply();
-            binding.timeFilterSecondButton.setText(getDateTimeString(longSecondDateTime));
+            binding.timeFilterSecondButton.setText("A :   " + getDateTimeString(longSecondDateTime));
+            binding.timeFilterSecondButton.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
+
         };
 
         //--------APPLY BUTTON-----------------
@@ -94,18 +92,32 @@ public class FragmentTimeFilter extends DialogFragment {
     }
 
     //----------------------------
-    //ACTIONS
+    //LIFECYCLE
     //----------------------------
-    public void setButtonsText() {
-        if (!mSharedPreferences.getString("tag", "").equals("")) {
-            binding.timeFilterFirstButton.setText(mSharedPreferences.getString("tag", ""));
+    @Override
+    public void onResume() {
+        super.onResume();
+        WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+        params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        getDialog().getWindow().setAttributes(params);
+    }
+
+    //-----------------------
+    //ACTIONS
+    //---------------------------
+    public void setButtonText() {
+        if (longFirstDateTime != 0) {
+            binding.timeFilterFirstButton.setText("De :   " + getDateTimeString(longFirstDateTime));
         } else {
             binding.timeFilterFirstButton.setText(R.string.horaire_de_début);
+            binding.timeFilterFirstButton.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
         }
-        if (!mSharedPreferences.getString("tag1", "").equals("")) {
-            binding.timeFilterSecondButton.setText(mSharedPreferences.getString("tag1", ""));
+        if (longSecondDateTime != 0) {
+            binding.timeFilterFirstButton.setText("A :   " + getDateTimeString(longSecondDateTime));
         } else {
             binding.timeFilterSecondButton.setText(R.string.horaire_de_fin);
+            binding.timeFilterSecondButton.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
         }
     }
 
@@ -145,7 +157,7 @@ public class FragmentTimeFilter extends DialogFragment {
     }
 
     private String getDateTimeString(long filterDateTime) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - kk:mm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - kk:mm");
         return sdf.format(filterDateTime);
     }
 
