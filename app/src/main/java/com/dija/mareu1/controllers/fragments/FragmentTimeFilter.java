@@ -19,11 +19,13 @@ import com.dija.mareu1.databinding.TimeFilterFragmentBinding;
 import com.dija.mareu1.events.TimeFilterEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 public class FragmentTimeFilter extends DialogFragment {
     private TimeFilterFragmentBinding binding;
@@ -36,6 +38,14 @@ public class FragmentTimeFilter extends DialogFragment {
     private int yearInput1, monthInput1, dayInput1, hourInput1, minuteInput1;
     long longFirstDateTime, longSecondDateTime;
 
+    //--------------------------------
+    //CONSTRUCTOR
+    //--------------------------------
+    public FragmentTimeFilter(long longFirstDateTime, long longSecondDateTime) {
+        this.longFirstDateTime = longFirstDateTime;
+        this.longSecondDateTime = longSecondDateTime;
+    }
+
     //-------------------------------
     //ON CREATE VIEW
     //-------------------------------
@@ -45,7 +55,6 @@ public class FragmentTimeFilter extends DialogFragment {
         binding = TimeFilterFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         setButtonText();
-
 
         //--------FIRST TAG BUTTON-----------------
         binding.timeFilterFirstButton.setOnClickListener(v -> pickDate(mOnDateSetListener));
@@ -62,7 +71,6 @@ public class FragmentTimeFilter extends DialogFragment {
             getFirstDateTimeLong();
             binding.timeFilterFirstButton.setText("De :   " + getDateTimeString(longFirstDateTime));
             binding.timeFilterFirstButton.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
-
         };
 
         //--------SECOND TAG BUTTON-----------------
@@ -80,7 +88,6 @@ public class FragmentTimeFilter extends DialogFragment {
             getSecondDateTimeLong();
             binding.timeFilterSecondButton.setText("A :   " + getDateTimeString(longSecondDateTime));
             binding.timeFilterSecondButton.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
-
         };
 
         //--------APPLY BUTTON-----------------
@@ -113,8 +120,8 @@ public class FragmentTimeFilter extends DialogFragment {
             binding.timeFilterFirstButton.setText(R.string.horaire_de_début);
             binding.timeFilterFirstButton.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
         }
-        if (longSecondDateTime != 0) {
-            binding.timeFilterFirstButton.setText("A :   " + getDateTimeString(longSecondDateTime));
+        if (longSecondDateTime != 0 && longSecondDateTime != Long.MAX_VALUE) {
+            binding.timeFilterSecondButton.setText("A :   " + getDateTimeString(longSecondDateTime));
         } else {
             binding.timeFilterSecondButton.setText(R.string.horaire_de_fin);
             binding.timeFilterSecondButton.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
@@ -163,11 +170,11 @@ public class FragmentTimeFilter extends DialogFragment {
 
     private void applyButtonActions() {
         EventBus.getDefault().post(new TimeFilterEvent(longFirstDateTime, longSecondDateTime));
-        getDialog().dismiss();
+        Objects.requireNonNull(getDialog()).dismiss();
     }
 
     private void neutralButtonActions() {
         EventBus.getDefault().post(new TimeFilterEvent(0, Long.MAX_VALUE));
-        getDialog().dismiss();
+        Objects.requireNonNull(getDialog()).dismiss();
     }
 }

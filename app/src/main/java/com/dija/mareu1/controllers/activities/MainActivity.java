@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MeetingAdapter mAdapter;
     private List<Meeting> mMeetings;
-    private long firstDate;
-    private long secondDate;
+    long firstDate, secondDate;
 
     //---------------------------
     //ON CREATE
@@ -155,9 +154,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "FragmentRoomFilter");
     }
 
-    private void menuTimeFilterAction() {
-        FragmentTimeFilter dial = new FragmentTimeFilter();
+    public void menuTimeFilterAction() {
+        FragmentTimeFilter dial = new FragmentTimeFilter(firstDate, secondDate);
         dial.show(getSupportFragmentManager(), "FragmentTimeFilter");
-        EventBus.getDefault().post(new TimeFilterEvent(firstDate, secondDate));
     }
 }
